@@ -24,7 +24,10 @@ public class WaitingQueueController {
      * 대기열 토큰 조회
      */
     @GetMapping("/api/v1/waiting-queue/{userId}")
-    public ResponseEntity<GetWaitingQueueResponse> getToken(@PathVariable Long userId) {
+    public ResponseEntity<GetWaitingQueueResponse> getToken(
+            @RequestHeader("token") String token,
+            @PathVariable Long userId
+    ) {
         return ResponseEntity.ok(new GetWaitingQueueResponse(
                 1L,
                 1L,

@@ -1,4 +1,4 @@
-package com.hanghae.concert_reservation.interfaces.api.reservation.response;
+package com.hanghae.concert_reservation.interfaces.api.concert.response;
 
 import lombok.Getter;
 

@@ -214,9 +214,9 @@
 
 ---
 
-## 7. 잔액 충전
+## 7. 유저 포인트 충전
 
-- **URL**: `POST /api/v1/points`
+- **URL**: `POST /api/v1/users/point`
 - **설명**: 사용자의 잔액을 충전합니다.
 
 ### 요청
@@ -237,9 +237,9 @@
 
 ---
 
-## 8. 잔액 조회
+## 8. 유저 포인트 조회
 
-- **URL**: `GET /api/v1/points/{userId}`
+- **URL**: `GET /api/v1/users/{userId}/point`
 - **설명**: 사용자의 잔액을 조회합니다.
 
 ### 요청

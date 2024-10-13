@@ -6,11 +6,10 @@ import com.hanghae.concert_reservation.interfaces.api.concert.response.ConcertDa
 import com.hanghae.concert_reservation.interfaces.api.concert.response.ConcertDatesResponse;
 import com.hanghae.concert_reservation.interfaces.api.concert.response.SeatResponse;
 import com.hanghae.concert_reservation.interfaces.api.concert.response.SeatsResponse;
+import com.hanghae.concert_reservation.interfaces.api.concert.request.ReservationRequest;
+import com.hanghae.concert_reservation.interfaces.api.concert.response.ReservationResponse;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +22,7 @@ public class ConcertController {
      */
     @GetMapping("/api/v1/concerts/{concertId}/concertDates")
     public ResponseEntity<ConcertDatesResponse> getAvailableConcertDates(
+            @RequestHeader("token") String token,
             @PathVariable Long concertId,
             @RequestParam ConcertDateStatus status
     ) {
@@ -39,6 +39,7 @@ public class ConcertController {
      */
     @GetMapping("/api/v1/concerts/{concertId}/concertDates/{concertDateId}/seats")
     public ResponseEntity<SeatsResponse> getSeats(
+            @RequestHeader("token") String token,
             @PathVariable Long concertId,
             @PathVariable Long concertDateId
     ) {
@@ -54,5 +55,16 @@ public class ConcertController {
                         )
                 )
         );
+    }
+
+    /**
+     * 좌석 임시 예약 요청
+     */
+    @PostMapping("/api/v1/reservation")
+    public ResponseEntity<ReservationResponse> reserve(
+            @RequestHeader("token") String token,
+            @RequestBody ReservationRequest request
+    ) {
+        return ResponseEntity.ok().body(new ReservationResponse(1L));
     }
 }
