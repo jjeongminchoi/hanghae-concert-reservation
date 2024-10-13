@@ -3,10 +3,10 @@
 ## 문서
 
 1. [Milestone](https://github.com/users/jjeongminchoi/projects/1)
-2. [Sequence Diagram](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/docs/step5/docs/SEQUENCE_DIAGRAM.md)
-3. [API Specification](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/docs/step6/docs/API_SPECIFICATION.md)
-4. [ERD](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/docs/step6/docs/ERD.md)
-5. [Project Structure & Tech Stack](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/docs/step6/docs/SET_PROJECT.md)
+2. [Sequence Diagram](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/main/docs/SEQUENCE_DIAGRAM.md)
+3. [API Specification](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/main/docs/API_SPECIFICATION.md)
+4. [ERD](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/main/docs/ERD.md)
+5. [Project Structure & Tech Stack](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/main/docs/SET_PROJECT.md)
 
 ---
 
