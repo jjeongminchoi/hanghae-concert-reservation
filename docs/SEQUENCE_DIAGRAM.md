@@ -6,7 +6,7 @@
 ```mermaid
 sequenceDiagram
     actor U as User 
-    participant Q as Queue
+    participant Q as WaitingQueue
     
     U->>Q: 대기열 토큰 발급 요청
     Q-->>U: 대기열 토큰 정보 반환
@@ -19,7 +19,7 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
     actor U as User
-    participant Q as Queue
+    participant Q as WaitingQueue
     
     U->>Q: 대기열 토큰 조회
     Q-->>U: 대기열 토큰 정보 반환
@@ -33,7 +33,7 @@ sequenceDiagram
 ```mermaid
 sequenceDiagram
     participant S as Scheduler
-    participant Q as Queue
+    participant Q as WaitingQueue
 
     note right of S: 대기열 토큰 활성 시
     S->>Q: 대기중인 토큰 N개 활성 요청 
@@ -154,7 +154,7 @@ sequenceDiagram
 sequenceDiagram
     participant A as Account
     actor U as User 
-    participant Q as Queue
+    participant Q as WaitingQueue
     participant C as Concert
     participant R as Reservation
     participant P as Payment

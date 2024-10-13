@@ -1,69 +1,92 @@
 ```mermaid
 
 erDiagram
-    USERS ||--|| ACCOUNT : owns
-    USERS ||--o| QUEUE : depends_on
+    USERS ||--|| POINT : owns
+    USERS ||--o| WAITING_QUEUE : depends_on
     USERS ||--o{ RESERVATION : has
     USERS ||--o{ PAYMENT : creates
     USERS {
-        BIGINT id pk "사용자ID"
-        VARCHAR name "사용자명"
+        BIGINT id PK "사용자ID"
+        VARCHAR username "사용자명"
+        DATETIME created_at "생성시간"
+        DATETIME updated_at "수정시간"
     }
 
-    ACCOUNT {
-        BIGINT id pk "계좌ID"
+    POINT ||--|{ POINT_HISTORY : has
+    POINT {
+        BIGINT id PK "포인트ID"
         BIGINT user_id "사용자ID"
         INT balance "잔액"
+        DATETIME created_at "생성시간"
+        DATETIME updated_at "수정시간"
+    }
+
+    POINT_HISTORY {
+        BIGINT id PK "포인트내역ID"
+        BIGINT point_id "포인트ID"
+        VARCHAR status "충전/결제"
+        INT amount "금액"
+        DATETIME created_at "생성시간"
     }
     
-    QUEUE {
-        BIGINT id pk "대기열ID"
+    WAITING_QUEUE {
+        BIGINT id PK "대기열ID"
+        BIGINT concert_id "콘서트ID"
         BIGINT user_id "사용자ID"
-        VARCHAR token "토큰"
-        QueueStatus status "대기열상태"
-        DATE created_at "생성시간"
-        DATE entered_at "입장시간"
-        DATE expired_at "만료시간"
+        VARCHAR token "토큰(UUID)"
+        VARCHAR status "대기열상태"
+        DATETIME created_at "생성시간"
+        DATETIME expired_at "만료시간"
     }
 
     CONCERT ||--o{ CONCERT_DATE : has
     CONCERT {
-        BIGINT id pk "콘서트ID"
+        BIGINT id PK "콘서트ID"
         VARCHAR name "콘서트명"
+        DATETIME created_at "생성시간"
+        DATETIME updated_at "수정시간"
     }
 
     CONCERT_DATE ||--|{ CONCERT_SEAT : has
     CONCERT_DATE {
-        BIGINT id pk "콘서트일정ID"
+        BIGINT id PK "콘서트일정ID"
         BIGINT concert_id "콘서트ID"
-        DATE date "날짜"
-        ConcertStatus staus "콘서트상태"
+        DATETIME date "콘서트날짜"
+        VARCHAR venue "콘서트장소"
+        VARCHAR status "콘서트상태"
+        DATETIME created_at "생성시간"
+        DATETIME updated_at "수정시간"
     }
 
     CONCERT_SEAT ||--o{ RESERVATION : relates_to
     CONCERT_SEAT {
-        BIGINT id pk "콘서트좌석ID"
+        BIGINT id PK "콘서트좌석ID"
         BIGINT concert_date_id "콘서트일정ID"
         INT seat_number "좌석번호"
         INT price "가격"
-        SeatStatus status "좌석상태"
+        VARCHAR status "좌석상태"
+        DATETIME created_at "생성시간"
+        DATETIME updated_at "수정시간"
     }
 
     PAYMENT ||--|| RESERVATION : depends_on
     PAYMENT {
-        BIGINT id pk "결제ID"
+        BIGINT id PK "결제ID"
         BIGINT userId "사용자ID"
         BIGINT reservation_id "예약ID"
+        DATETIME created_at "생성시간"
+        DATETIME updated_at "수정시간"
     }
     
     RESERVATION {
-        BIGINT id pk "예약ID"
+        BIGINT id PK "예약ID"
         BIGINT user_id "사용자ID"
         BIGINT concert_seat_id "콘서트좌석ID"
-        VARCHAR concert_name "콘서트명"
-        DATE concert_date "콘서트날짜"
+        VARCHAR name "콘서트명"
+        DATETIME date "콘서트날짜"
         INT price "가격"
-        Reservation_status status "예약상태"
-        DATE created_at "예약생성시간"
+        VARCHAR status "예약상태"
+        DATETIME created_at "생성시간"
+        DATETIME updated_at "수정시간"
     }
 ```

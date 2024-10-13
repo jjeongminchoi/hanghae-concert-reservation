@@ -5,11 +5,11 @@ import lombok.Getter;
 @Getter
 public class ReservationRequest {
 
-    private Long reservationId;
-    private Long seatId;
+    private Long userId;
+    private Long concertSeatId;
 
-    public ReservationRequest(Long reservationId, Long seatId) {
-        this.reservationId = reservationId;
-        this.seatId = seatId;
+    public ReservationRequest(Long userId, Long concertSeatId) {
+        this.userId = userId;
+        this.concertSeatId = concertSeatId;
     }
 }

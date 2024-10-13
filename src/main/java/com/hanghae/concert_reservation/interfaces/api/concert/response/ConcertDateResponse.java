@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 public record ConcertDateResponse (
         Long concertDateId,
-        LocalDateTime date
+        Long concertId,
+        LocalDateTime date,
+        String venue
 ) {
 }
