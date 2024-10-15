@@ -7,10 +7,10 @@ public class UserPointResponse {
 
     private Long userId;
 
-    private int amount;
+    private int balance;
 
-    public UserPointResponse(Long userId, int amount) {
+    public UserPointResponse(Long userId, int balance) {
         this.userId = userId;
-        this.amount = amount;
+        this.balance = balance;
     }
 }

@@ -5,11 +5,11 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class ConcertDatesResponse {
+public class ConcertSchedulesResponse {
 
-    private List<ConcertDateResponse> concerts;
+    private List<ConcertScheduleResponse> concerts;
 
-    public ConcertDatesResponse(List<ConcertDateResponse> concerts) {
+    public ConcertSchedulesResponse(List<ConcertScheduleResponse> concerts) {
         this.concerts = concerts;
     }
 }

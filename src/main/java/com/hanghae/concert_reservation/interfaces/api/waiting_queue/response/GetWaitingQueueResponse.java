@@ -6,8 +6,7 @@ import java.time.LocalDateTime;
 
 public record GetWaitingQueueResponse(
         Long id,
-        Long userId,
-        Long concertId,
+        Long sessionId,
         WaitingQueueStatus status,
         LocalDateTime createdAt,
         LocalDateTime expiredAt

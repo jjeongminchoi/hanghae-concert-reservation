@@ -2,7 +2,6 @@
 
 erDiagram
     USERS ||--|| POINT : owns
-    USERS ||--o| WAITING_QUEUE : depends_on
     USERS ||--o{ RESERVATION : has
     USERS ||--o{ PAYMENT : creates
     USERS {
@@ -31,15 +30,14 @@ erDiagram
     
     WAITING_QUEUE {
         BIGINT id PK "대기열ID"
-        BIGINT concert_id "콘서트ID"
-        BIGINT user_id "사용자ID"
-        VARCHAR token "토큰(UUID)"
+        BIGINT session_id "세션ID"
+        VARCHAR waiting_queue_uuid "대기열토큰"
         VARCHAR status "대기열상태"
         DATETIME created_at "생성시간"
         DATETIME expired_at "만료시간"
     }
 
-    CONCERT ||--o{ CONCERT_DATE : has
+    CONCERT ||--o{ CONCERT_SCHEDULE : has
     CONCERT {
         BIGINT id PK "콘서트ID"
         VARCHAR name "콘서트명"
@@ -47,8 +45,8 @@ erDiagram
         DATETIME updated_at "수정시간"
     }
 
-    CONCERT_DATE ||--|{ CONCERT_SEAT : has
-    CONCERT_DATE {
+    CONCERT_SCHEDULE ||--|{ CONCERT_SEAT : has
+    CONCERT_SCHEDULE {
         BIGINT id PK "콘서트일정ID"
         BIGINT concert_id "콘서트ID"
         DATETIME date "콘서트날짜"

@@ -5,12 +5,9 @@ import lombok.Getter;
 @Getter
 public class CreateWaitingQueue {
 
-    private Long userId;
+    private Long sessionId;
 
-    private Long concertId;
-
-    public CreateWaitingQueue(Long userId, Long concertId) {
-        this.userId = userId;
-        this.concertId = concertId;
+    public CreateWaitingQueue(Long sessionId) {
+        this.sessionId = sessionId;
     }
 }

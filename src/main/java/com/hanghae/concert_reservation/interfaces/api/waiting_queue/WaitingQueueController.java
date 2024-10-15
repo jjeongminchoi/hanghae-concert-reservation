@@ -16,22 +16,20 @@ public class WaitingQueueController {
      * 대기열 토큰 발급
      */
     @PostMapping("/api/v1/waiting-queue")
-    public ResponseEntity<CreateWaitingQueueResponse> createToken(@RequestBody CreateWaitingQueue request) {
+    public ResponseEntity<CreateWaitingQueueResponse> create(@RequestBody CreateWaitingQueue request) {
         return ResponseEntity.ok(new CreateWaitingQueueResponse("uuuuuuuuiiiidddd"));
     }
 
     /**
      * 대기열 토큰 조회
      */
-    @GetMapping("/api/v1/waiting-queue/{userId}")
-    public ResponseEntity<GetWaitingQueueResponse> getToken(
-            @RequestHeader("token") String token,
-            @PathVariable Long userId
+    @GetMapping("/api/v1/waiting-queue")
+    public ResponseEntity<GetWaitingQueueResponse> get(
+            @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid
     ) {
         return ResponseEntity.ok(new GetWaitingQueueResponse(
                 1L,
                 1L,
-                100L,
                 WaitingQueueStatus.ACTIVE,
                 LocalDateTime.of(2024, 10, 10, 9, 0, 0),
                 LocalDateTime.of(2024, 10, 10, 9, 20, 0)));

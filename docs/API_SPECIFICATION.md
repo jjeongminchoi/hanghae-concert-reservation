@@ -14,8 +14,7 @@
 - **Request Body**:
   ```json
   {
-    "userId": 1,
-    "concertId": 100
+    "sessionId": 1
   }
   ```
 
@@ -25,7 +24,7 @@
 - **Response Body**:
   ```json
   { 
-    "token": "uuuuuuuuiiiidddd"
+    "waitingQueueUuid": "uuuuuuuuiiiidddd"
   }
   ```
 
@@ -33,16 +32,14 @@
 
 ## 2. 대기열 토큰 조회
 
-- **URL**: `GET /api/v1/waiting-queue/{userId}`
+- **URL**: `GET /api/v1/waiting-queue`
 - **설명**: 대기열에서 사용자 토큰을 조회합니다.
 
 ### 요청
 
 - **Headers**:
   - `Content-Type`: `application/json`
-  - `token` (string): 대기열 토큰
-- **Path Variable**
-  - userId (int): 조회할 사용자의 고유 ID (필수)
+  - `WAITING-QUEUE-UUID` (string): 대기열 토큰
 
 ### 응답
 
@@ -52,7 +49,6 @@
   {
     "id": 1,
     "userId": 1,
-    "concertId": 100,
     "status": "ACTIVE",
     "createdAt": "2024-10-10 09:00:00",
     "expiredAt": "2024-10-10 09:20:00"
@@ -63,18 +59,18 @@
 
 ## 3. 예약 가능한 콘서트 날짜 조회
 
-- **URL**: `GET /api/v1/concerts/{concertId}/concertDates`
+- **URL**: `GET /api/v1/concerts/{concertId}/schedules`
 - **설명**: 예약 가능한 콘서트 날짜를 조회합니다.
 
 ### 요청
 
 - **Headers**:
   - `Content-Type`: `application/json`
-  - `token` (string): 대기열 토큰
+  - `WAITING-QUEUE-UUID` (string): 대기열 토큰
 - **Path Variable**
   - concertId (int): 콘서트의 고유 ID (필수)
 - **Query Parameters**
-  - status (ConcertDateStatus): 콘서트일정상태 (OPEN, CLOSE) (필수)
+  - status (ConcertScheduleStatus): 콘서트일정상태 (OPEN, CLOSE) (필수)
 
 ### 응답
 
@@ -90,7 +86,7 @@
         "venue": "장소A"
       },
       {
-        "concertDateId": 2,
+        "concertScheduleId": 2,
         "concertId": 1,
         "date": "2024-10-15 09:00:00",
         "venue": "장소B"
@@ -103,14 +99,14 @@
 
 ## 4. 콘서트 좌석 조회
 
-- **URL**: `GET /api/v1/concerts/{concertId}/concertDates/{concertDateId}/seats`
+- **URL**: `GET /api/v1/concerts/{concertId}/schedules/{concertDateId}/seats`
 - **설명**: 특정 날짜의 콘서트 좌석을 조회합니다.
 
 ### 요청
 
 - **Headers**:
   - `Content-Type`: `application/json`
-  - `token` (string): 대기열 토큰
+  - `WAITING-QUEUE-UUID` (string): 대기열 토큰
 - **Path Variable**
   - concertId (int): 예약할 콘서트의 고유 ID (필수)
   - concertDateId (int): 예약할 콘서트 일정의 고유 ID (필수)
@@ -163,7 +159,7 @@
 
 - **Headers**:
   - `Content-Type`: `application/json`
-  - `token` (string): 대기열 토큰
+  - `WAITING-QUEUE-UUID` (string): 대기열 토큰
 - **Request Body**:
   ```json
   {
@@ -193,7 +189,7 @@
 
 - **Headers**:
   - `Content-Type`: `application/json`
-  - `token` (string): 대기열 토큰
+  - `WAITING-QUEUE-UUID` (string): 대기열 토큰
 - **Request Body**:
   ```json
   {
