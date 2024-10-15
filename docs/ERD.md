@@ -59,7 +59,7 @@ erDiagram
     CONCERT_SEAT ||--o{ RESERVATION : relates_to
     CONCERT_SEAT {
         BIGINT id PK "콘서트좌석ID"
-        BIGINT concert_date_id "콘서트일정ID"
+        BIGINT concert_shcedule_id "콘서트일정ID"
         INT seat_number "좌석번호"
         INT price "가격"
         VARCHAR status "좌석상태"
