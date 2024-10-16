@@ -11,12 +11,7 @@
 
 - **Headers**:
   - `Content-Type`: `application/json`
-- **Request Body**:
-  ```json
-  {
-    "sessionId": 1
-  }
-  ```
+  - `SESSION_ID`: (string) 세션 ID
 
 ### 응답
 
@@ -39,6 +34,7 @@
 
 - **Headers**:
   - `Content-Type`: `application/json`
+  - `SESSION_ID`: (string) 세션 ID
   - `WAITING-QUEUE-UUID` (string): 대기열 토큰
 
 ### 응답
@@ -49,9 +45,10 @@
   {
     "id": 1,
     "userId": 1,
-    "status": "ACTIVE",
+    "status": "EXPIRE",
     "createdAt": "2024-10-10 09:00:00",
-    "expiredAt": "2024-10-10 09:20:00"
+    "expiredAt": "2024-10-10 09:20:00",
+    "updatedAt": "2024-10-10 09:30:00"
   }
   ```
 
