@@ -52,5 +52,6 @@ public class ConcertSeat {
 
     public void changeConcertSeatStatus(ConcertSeatStatus concertSeatStatus) {
         this.concertSeatStatus = concertSeatStatus;
+        this.updatedAt = LocalDateTime.now();
     }
 }

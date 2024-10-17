@@ -1,6 +1,7 @@
 package com.hanghae.concert_reservation.domain.user;
 
 import com.hanghae.concert_reservation.config.exception.BizIllegalArgumentException;
+import com.hanghae.concert_reservation.config.exception.BizInvalidException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -47,5 +48,17 @@ public class UserPoint {
             throw new BizIllegalArgumentException("충전할 금액이 없습니다");
         }
         this.balance = this.balance.add(amount);
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public void usePoint(BigDecimal amount) {
+        if (balance.subtract(amount).compareTo(BigDecimal.ZERO) < 0) {
+            throw new BizIllegalArgumentException("잔액이 부족합니다");
+        }
+        if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+            throw new BizInvalidException("비정상 결제 금액입니다");
+        }
+        this.balance = this.balance.subtract(amount);
+        this.updatedAt = LocalDateTime.now();
     }
 }

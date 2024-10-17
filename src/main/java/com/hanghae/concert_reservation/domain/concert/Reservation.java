@@ -62,9 +62,11 @@ public class Reservation {
 
     public void setToTemporaryReservationTime() {
         this.tempReservedAt = LocalDateTime.now().plusMinutes(5); // 5분간 임시 예약
+        this.updatedAt = LocalDateTime.now();
     }
 
     public void changeReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
+        this.updatedAt = LocalDateTime.now();
     }
 }

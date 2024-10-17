@@ -48,6 +48,6 @@ public class ConcertController {
             @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid,
             @RequestBody ReservationCommand command
     ) {
-        return ResponseEntity.ok().body(new ReservationResponse(1L));
+        return ResponseEntity.ok(concertUseCase.reservation(waitingQueueUuid, command));
     }
 }
