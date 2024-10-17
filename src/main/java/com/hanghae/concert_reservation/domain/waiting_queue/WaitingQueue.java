@@ -36,7 +36,7 @@ public class WaitingQueue {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    protected WaitingQueue(String sessionId, String waitingQueueUuid) {
+    private WaitingQueue(String sessionId, String waitingQueueUuid) {
         this.sessionId = sessionId;
         this.waitingQueueUuid = waitingQueueUuid;
         this.waitingQueueStatus = WaitingQueueStatus.WAIT;
@@ -44,7 +44,7 @@ public class WaitingQueue {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public static WaitingQueue create(String sessionId, String waitingQueueUuid) {
+    public static WaitingQueue from(String sessionId, String waitingQueueUuid) {
         return new WaitingQueue(sessionId, waitingQueueUuid);
     }
 

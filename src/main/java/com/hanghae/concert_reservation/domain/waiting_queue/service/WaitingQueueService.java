@@ -26,7 +26,7 @@ public class WaitingQueueService implements WaitingQueueUseCase {
         waitingQueueRepository.findWaitingQueueBySessionId(sessionId)
                 .orElseThrow(() -> new BizAlreadyExistsException("대기열이 이미 존재합니다"));
 
-        WaitingQueue waitingQueue = waitingQueueRepository.save(WaitingQueue.create(sessionId, UUID.randomUUID().toString()));
+        WaitingQueue waitingQueue = waitingQueueRepository.save(WaitingQueue.from(sessionId, UUID.randomUUID().toString()));
         return new WaitingQueueCreateResponse(waitingQueue.getWaitingQueueUuid());
     }
 

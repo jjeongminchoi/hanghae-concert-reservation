@@ -18,7 +18,7 @@ class WaitingQueueTest {
         String uuid = UUID.randomUUID().toString();
 
         // when
-        WaitingQueue waitingQueue = WaitingQueue.create(sessionId, uuid);
+        WaitingQueue waitingQueue = WaitingQueue.from(sessionId, uuid);
 
         // then
         assertThat(waitingQueue.getSessionId()).isEqualTo(sessionId);
@@ -32,7 +32,7 @@ class WaitingQueueTest {
         String sessionId = Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8));
         String uuid = UUID.randomUUID().toString();
 
-        WaitingQueue waitingQueue = WaitingQueue.create(sessionId, uuid);
+        WaitingQueue waitingQueue = WaitingQueue.from(sessionId, uuid);
 
         // when
         waitingQueue.activateWaitingQueue();
@@ -47,7 +47,7 @@ class WaitingQueueTest {
         String sessionId = Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8));
         String uuid = UUID.randomUUID().toString();
 
-        WaitingQueue waitingQueue = WaitingQueue.create(sessionId, uuid);
+        WaitingQueue waitingQueue = WaitingQueue.from(sessionId, uuid);
 
         // when
         waitingQueue.expireWaitingQueue();
