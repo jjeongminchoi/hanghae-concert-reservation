@@ -7,5 +7,7 @@ public interface WaitingQueueUseCase {
 
     WaitingQueueCreateResponse createWaitingQueue(String sessionId);
 
-    WaitingQueueResponse getWaitingQueue(String sessionId, String waitingQueueUuid);
+    WaitingQueueResponse getWaitingQueue(String waitingQueueUuid);
+
+    boolean existsActiveWaitingQueue(String waitingQueueUuid);
 }

@@ -34,7 +34,6 @@
 
 - **Headers**:
   - `Content-Type`: `application/json`
-  - `SESSION_ID`: (string) 세션 ID
   - `WAITING-QUEUE-UUID` (string): 대기열 토큰
 
 ### 응답
@@ -54,7 +53,7 @@
 
 ---
 
-## 3. 예약 가능한 콘서트 날짜 조회
+## 3. 예약 가능한 콘서트 일정 조회
 
 - **URL**: `GET /api/v1/concerts/{concertId}/schedules`
 - **설명**: 예약 가능한 콘서트 날짜를 조회합니다.
@@ -77,7 +76,7 @@
   {
     "concerts": [
       {
-        "concertDateId": 1,
+        "concertScheduleId": 1,
         "concertId": 1,
         "date": "2024-10-10 09:00:00",
         "venue": "장소A"
@@ -96,7 +95,7 @@
 
 ## 4. 콘서트 좌석 조회
 
-- **URL**: `GET /api/v1/concerts/{concertId}/schedules/{concertDateId}/seats`
+- **URL**: `GET /api/v1/concerts/{concertId}/schedules/{concertScheduleId}/seats`
 - **설명**: 특정 날짜의 콘서트 좌석을 조회합니다.
 
 ### 요청

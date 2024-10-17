@@ -81,11 +81,12 @@ erDiagram
         BIGINT id PK "예약ID"
         BIGINT user_id "사용자ID"
         BIGINT concert_seat_id "콘서트좌석ID"
-        VARCHAR name "콘서트명"
-        DATETIME date "콘서트날짜"
+        VARCHAR concert_name "콘서트명"
+        DATETIME concert_date "콘서트날짜"
         INT price "가격"
         VARCHAR status "예약상태"
         DATETIME created_at "생성시간"
         DATETIME updated_at "수정시간"
+        DATETIME temp_reserved_at "임시예약시간"
     }
 ```

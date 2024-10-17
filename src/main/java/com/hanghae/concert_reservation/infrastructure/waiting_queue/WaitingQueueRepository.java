@@ -11,8 +11,11 @@ import java.util.Optional;
 
 public interface WaitingQueueRepository extends JpaRepository<WaitingQueue, Long> {
 
-    @Query("SELECT wq FROM WaitingQueue wq WHERE wq.sessionId = :sessionId")
-    WaitingQueue getWaitingQueue(@Param("sessionId") String sessionId);
+    @Query("SELECT wq FROM WaitingQueue wq WHERE wq.waitingQueueUuid = :waitingQueueUuid")
+    WaitingQueue getWaitingQueue(@Param("waitingQueueUuid") String waitingQueueUuid);
+
+    @Query("SELECT wq FROM WaitingQueue wq WHERE wq.waitingQueueUuid = :waitingQueueUuid AND wq.waitingQueueStatus = 'ACTIVE'")
+    WaitingQueue getWaitingQueueWithActive(@Param("waitingQueueUuid") String waitingQueueUuid);
 
     Optional<WaitingQueue> findWaitingQueueBySessionId(String sessionId);
 

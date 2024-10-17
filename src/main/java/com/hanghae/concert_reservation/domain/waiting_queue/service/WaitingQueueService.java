@@ -1,6 +1,7 @@
 package com.hanghae.concert_reservation.domain.waiting_queue.service;
 
 import com.hanghae.concert_reservation.config.exception.BizAlreadyExistsException;
+import com.hanghae.concert_reservation.config.exception.BizInvalidException;
 import com.hanghae.concert_reservation.config.exception.BizNotFoundException;
 import com.hanghae.concert_reservation.domain.waiting_queue.WaitingQueue;
 import com.hanghae.concert_reservation.usecase.waiting_queue.WaitingQueueUseCase;
@@ -31,8 +32,8 @@ public class WaitingQueueService implements WaitingQueueUseCase {
     }
 
     @Override
-    public WaitingQueueResponse getWaitingQueue(String sessionId, String waitingQueueUuid) {
-        WaitingQueue waitingQueue = waitingQueueRepository.getWaitingQueue(sessionId);
+    public WaitingQueueResponse getWaitingQueue(String waitingQueueUuid) {
+        WaitingQueue waitingQueue = waitingQueueRepository.getWaitingQueue(waitingQueueUuid);
 
         if (waitingQueue == null) throw new BizNotFoundException("대기열이 존재하지 않습니다");
 
@@ -44,5 +45,14 @@ public class WaitingQueueService implements WaitingQueueUseCase {
                 waitingQueue.getExpiredAt(),
                 waitingQueue.getUpdatedAt()
         );
+    }
+
+    @Override
+    public boolean existsActiveWaitingQueue(String waitingQueueUuid) {
+        WaitingQueue waitingQueue = waitingQueueRepository.getWaitingQueueWithActive(waitingQueueUuid);
+
+        if (waitingQueue == null) throw new BizInvalidException("대기열이 유효하지 않습니다");
+
+        return true;
     }
 }

@@ -26,9 +26,8 @@ public class WaitingQueueController {
      */
     @GetMapping("/api/v1/waiting-queue")
     public ResponseEntity<WaitingQueueResponse> getWaitingQueue(
-            @RequestHeader("SESSION_ID") String sessionId,
             @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid
     ) {
-        return ResponseEntity.ok(waitingQueueUseCase.getWaitingQueue(sessionId, waitingQueueUuid));
+        return ResponseEntity.ok(waitingQueueUseCase.getWaitingQueue(waitingQueueUuid));
     }
 }

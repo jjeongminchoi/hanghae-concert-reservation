@@ -38,7 +38,7 @@ public class UserPoint {
         this.updatedAt = LocalDateTime.now();
     }
 
-    public static UserPoint from(Long userId, BigDecimal balance) {
+    public static UserPoint of(Long userId, BigDecimal balance) {
         return new UserPoint(userId, balance);
     }
 

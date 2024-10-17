@@ -27,7 +27,7 @@ public class UserPointService implements UserPointUseCase {
         userPoint.chargePoint(command.getAmount());
 
         // 유저 포인트 내역 저장
-        userPointHistoryRepository.save(UserPointHistory.from(userPoint.getId(), command.getUserPointTransactionType(), command.getAmount()));
+        userPointHistoryRepository.save(UserPointHistory.of(userPoint.getId(), command.getUserPointTransactionType(), command.getAmount()));
     }
 
     @Override

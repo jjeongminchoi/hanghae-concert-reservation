@@ -39,7 +39,7 @@ public class UserPointHistory {
         this.createdAt = LocalDateTime.now();
     }
 
-    public static UserPointHistory from(Long pointId, UserPointTransactionType userPointTransactionType, BigDecimal amount) {
+    public static UserPointHistory of(Long pointId, UserPointTransactionType userPointTransactionType, BigDecimal amount) {
         return new UserPointHistory(pointId, userPointTransactionType, amount);
     }
 }

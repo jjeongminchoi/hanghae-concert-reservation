@@ -17,7 +17,7 @@ class UserPointHistoryTest {
         BigDecimal amount = BigDecimal.valueOf(5000);
 
         // when
-        UserPointHistory userPointHistory = UserPointHistory.from(pointId, type, amount);
+        UserPointHistory userPointHistory = UserPointHistory.of(pointId, type, amount);
 
         // then
         assertThat(userPointHistory).isNotNull();

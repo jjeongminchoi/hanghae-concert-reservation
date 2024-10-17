@@ -16,7 +16,7 @@ class UserPointTest {
         BigDecimal balance = BigDecimal.valueOf(10000);
 
         // when
-        UserPoint userPoint = UserPoint.from(userId, balance);
+        UserPoint userPoint = UserPoint.of(userId, balance);
 
         // then
         assertThat(userPoint).isNotNull();
@@ -26,7 +26,7 @@ class UserPointTest {
     @Test
     void chargeUserPoint() {
         // given
-        UserPoint userPoint = UserPoint.from(1L, BigDecimal.valueOf(10000));
+        UserPoint userPoint = UserPoint.of(1L, BigDecimal.valueOf(10000));
         BigDecimal chargeAmount = BigDecimal.valueOf(5000);
 
         // when
@@ -39,7 +39,7 @@ class UserPointTest {
     @Test
     void chargeUserPointWithNegativeAmount() {
         // given
-        UserPoint userPoint = UserPoint.from(1L, BigDecimal.valueOf(10000));
+        UserPoint userPoint = UserPoint.of(1L, BigDecimal.valueOf(10000));
         BigDecimal chargeAmount = BigDecimal.valueOf(0);
 
         // exception
