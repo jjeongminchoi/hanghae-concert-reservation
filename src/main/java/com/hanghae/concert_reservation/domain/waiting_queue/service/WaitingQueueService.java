@@ -48,11 +48,8 @@ public class WaitingQueueService implements WaitingQueueUseCase {
     }
 
     @Override
-    public boolean existsActiveWaitingQueue(String waitingQueueUuid) {
+    public void existsActiveWaitingQueue(String waitingQueueUuid) {
         WaitingQueue waitingQueue = waitingQueueRepository.getWaitingQueueWithActive(waitingQueueUuid);
-
         if (waitingQueue == null) throw new BizInvalidException("대기열이 유효하지 않습니다");
-
-        return true;
     }
 }

@@ -29,6 +29,7 @@ public class ConcertSeat {
     private BigDecimal price;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ConcertSeatStatus concertSeatStatus;
 
     @Column(nullable = false, updatable = false)

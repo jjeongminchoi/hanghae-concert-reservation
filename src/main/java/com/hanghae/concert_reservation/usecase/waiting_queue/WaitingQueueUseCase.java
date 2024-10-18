@@ -9,5 +9,5 @@ public interface WaitingQueueUseCase {
 
     WaitingQueueResponse getWaitingQueue(String waitingQueueUuid);
 
-    boolean existsActiveWaitingQueue(String waitingQueueUuid);
+    void existsActiveWaitingQueue(String waitingQueueUuid);
 }

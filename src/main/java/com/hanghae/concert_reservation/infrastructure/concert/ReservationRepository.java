@@ -1,6 +1,5 @@
 package com.hanghae.concert_reservation.infrastructure.concert;
 
-import com.hanghae.concert_reservation.domain.concert.ConcertSeat;
 import com.hanghae.concert_reservation.domain.concert.Reservation;
 import com.hanghae.concert_reservation.infrastructure.concert.response.ReservationInfoDto;
 import org.springframework.data.jpa.repository.JpaRepository;

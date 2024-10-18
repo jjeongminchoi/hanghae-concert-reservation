@@ -35,6 +35,7 @@ public class Reservation {
     private BigDecimal price;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private ReservationStatus reservationStatus;
 
     @Column(nullable = false, updatable = false)
