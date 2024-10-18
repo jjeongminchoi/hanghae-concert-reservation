@@ -11,12 +11,7 @@
 
 - **Headers**:
   - `Content-Type`: `application/json`
-- **Request Body**:
-  ```json
-  {
-    "sessionId": 1
-  }
-  ```
+  - `SESSION_ID`: (string) 세션 ID
 
 ### 응답
 
@@ -49,15 +44,16 @@
   {
     "id": 1,
     "userId": 1,
-    "status": "ACTIVE",
+    "status": "EXPIRE",
     "createdAt": "2024-10-10 09:00:00",
-    "expiredAt": "2024-10-10 09:20:00"
+    "expiredAt": "2024-10-10 09:20:00",
+    "updatedAt": "2024-10-10 09:30:00"
   }
   ```
 
 ---
 
-## 3. 예약 가능한 콘서트 날짜 조회
+## 3. 예약 가능한 콘서트 일정 조회
 
 - **URL**: `GET /api/v1/concerts/{concertId}/schedules`
 - **설명**: 예약 가능한 콘서트 날짜를 조회합니다.
@@ -80,7 +76,7 @@
   {
     "concerts": [
       {
-        "concertDateId": 1,
+        "concertScheduleId": 1,
         "concertId": 1,
         "date": "2024-10-10 09:00:00",
         "venue": "장소A"
@@ -99,7 +95,7 @@
 
 ## 4. 콘서트 좌석 조회
 
-- **URL**: `GET /api/v1/concerts/{concertId}/schedules/{concertDateId}/seats`
+- **URL**: `GET /api/v1/concerts/{concertId}/schedules/{concertScheduleId}/seats`
 - **설명**: 특정 날짜의 콘서트 좌석을 조회합니다.
 
 ### 요청
@@ -212,7 +208,7 @@
 
 ## 7. 유저 포인트 충전
 
-- **URL**: `POST /api/v1/users/point`
+- **URL**: `POST /api/v1/users/points`
 - **설명**: 사용자의 잔액을 충전합니다.
 
 ### 요청
@@ -222,7 +218,7 @@
 - **Request Body**:
   ```json
   {
-    "userId": 1,
+    "userId": 1, 
     "amount": 10000
   }
   ```
@@ -235,7 +231,7 @@
 
 ## 8. 유저 포인트 조회
 
-- **URL**: `GET /api/v1/users/{userId}/point`
+- **URL**: `GET /api/v1/users/{userId}/points`
 - **설명**: 사용자의 잔액을 조회합니다.
 
 ### 요청
