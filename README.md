@@ -7,6 +7,7 @@
 3. [API Specification](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/main/docs/API_SPECIFICATION.md)
 4. [ERD](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/main/docs/ERD.md)
 5. [Project Structure & Tech Stack](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/main/docs/SET_PROJECT.md)
+6. [Swaager Web UI](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/feat/step7/docs/SWAGGER_UI.md)
 
 ---
 
