@@ -95,7 +95,7 @@
 
 ## 4. 콘서트 좌석 조회
 
-- **URL**: `GET /api/v1/concerts/{concertId}/schedules/{concertScheduleId}/seats`
+- **URL**: `GET /api/v1/concerts/{concertId}/schedules/{scheduleId}/seats`
 - **설명**: 특정 날짜의 콘서트 좌석을 조회합니다.
 
 ### 요청
@@ -105,7 +105,7 @@
   - `WAITING-QUEUE-UUID` (string): 대기열 토큰
 - **Path Variable**
   - concertId (int): 예약할 콘서트의 고유 ID (필수)
-  - concertDateId (int): 예약할 콘서트 일정의 고유 ID (필수)
+  - scheduleId (int): 예약할 콘서트 일정의 고유 ID (필수)
 
 ### 응답
 
@@ -148,7 +148,7 @@
 
 ## 5. 좌석 (임시)예약 요청
 
-- **URL**: `POST /api/v1/reservation`
+- **URL**: `POST /api/v1/concerts/{concertId}/schedules/{scheduleId}/reservations`
 - **설명**: 좌석을 (임시)예약 합니다.
 
 ### 요청
@@ -156,6 +156,9 @@
 - **Headers**:
   - `Content-Type`: `application/json`
   - `WAITING-QUEUE-UUID` (string): 대기열 토큰
+- **Path Variable**
+  - concertId (int): 예약할 콘서트의 고유 ID (필수)
+  - concertDateId (int): 예약할 콘서트 일정의 고유 ID (필수)
 - **Request Body**:
   ```json
   {

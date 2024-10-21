@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Concert", description = "Concert API")
 @RequiredArgsConstructor
+@RequestMapping("/api/v1/concerts")
 @RestController
 public class ConcertController {
 
     private final ConcertUseCase concertUseCase;
 
     @Operation(summary = "콘서트 일정 조회", description = "예약 가능한 콘서트 일정을 조회합니다.")
-    @GetMapping("/api/v1/concerts/{concertId}/schedules")
+    @GetMapping("/{concertId}/schedules")
     public ResponseEntity<ConcertSchedulesResponse> getConcertSchedules(
             @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid,
             @PathVariable Long concertId,
@@ -30,19 +31,21 @@ public class ConcertController {
     }
 
     @Operation(summary = "콘서트 좌석 조회", description = "콘서트 좌석을 조회합니다.")
-    @GetMapping("/api/v1/concerts/{concertId}/schedules/{concertScheduleId}/seats")
+    @GetMapping("/{concertId}/schedules/{scheduleId}/seats")
     public ResponseEntity<ConcertSeatsResponse> getSeats(
             @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid,
             @PathVariable Long concertId,
-            @PathVariable Long concertScheduleId
+            @PathVariable Long scheduleId
     ) {
-        return ResponseEntity.ok(concertUseCase.getConcertSeats(waitingQueueUuid, concertId, concertScheduleId));
+        return ResponseEntity.ok(concertUseCase.getConcertSeats(waitingQueueUuid, concertId, scheduleId));
     }
 
     @Operation(summary = "좌석 임시 예약", description = "5분간 점유할 수 있도록 좌석을 임시 예약합니다.")
-    @PostMapping("/api/v1/reservation")
+    @PostMapping("/{concertId}/schedules/{scheduleId}/reservations")
     public ResponseEntity<ReservationResponse> reserve(
             @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid,
+            @RequestParam Long concertId,
+            @PathVariable Long scheduleId,
             @RequestBody ReservationCommand command
     ) {
         return ResponseEntity.ok(concertUseCase.reservation(waitingQueueUuid, command));
