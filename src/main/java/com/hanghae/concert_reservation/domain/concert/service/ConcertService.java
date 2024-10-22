@@ -7,7 +7,7 @@ import com.hanghae.concert_reservation.domain.concert.entity.Reservation;
 import com.hanghae.concert_reservation.domain.concert.constant.ConcertScheduleStatus;
 import com.hanghae.concert_reservation.domain.concert.constant.ConcertSeatStatus;
 import com.hanghae.concert_reservation.domain.concert.repository.ConcertRepository;
-import com.hanghae.concert_reservation.domain.waiting_queue.service.WaitingQueueService;
+import com.hanghae.concert_reservation.domain.waiting_queue.repository.WaitingQueueRepository;
 import com.hanghae.concert_reservation.domain.concert.dto.ReservationInfoDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,15 +20,15 @@ import java.util.List;
 @Service
 public class ConcertService {
 
-    private final WaitingQueueService waitingQueueService;
+    private final WaitingQueueRepository waitingQueueRepository;
     private final ConcertRepository concertRepository;
 
     public ConcertSchedulesResponse getConcertSchedules(String waitingQueueUuid, Long concertId, ConcertScheduleStatus concertScheduleStatus) {
         // 대기열 유효성 체크
-        waitingQueueService.existsActiveWaitingQueue(waitingQueueUuid);
+        waitingQueueRepository.existsActiveWaitingQueue(waitingQueueUuid);
 
         // 예약 가능한 콘서트 일정 조회
-        List<ConcertScheduleResponse> scheduleResponses = concertRepository.getConcertSchedules(concertId, concertScheduleStatus.toString())
+        List<ConcertScheduleResponse> scheduleResponses = concertRepository.getConcertSchedules(concertId, concertScheduleStatus)
                 .stream()
                 .map(concertSchedule -> new ConcertScheduleResponse(
                         concertSchedule.getId(),
@@ -42,7 +42,7 @@ public class ConcertService {
 
     public ConcertSeatsResponse getConcertSeats(String waitingQueueUuid, Long concertScheduleId) {
         // 대기열 유효성 체크
-        waitingQueueService.existsActiveWaitingQueue(waitingQueueUuid);
+        waitingQueueRepository.existsActiveWaitingQueue(waitingQueueUuid);
 
         // 콘서트 좌석 조회
         List<ConcertSeatResponse> seatResponses = concertRepository.getConcertSeats(concertScheduleId)
@@ -66,7 +66,7 @@ public class ConcertService {
     @Transactional
     public ReservationResponse reservation(String waitingQueueUuid, ConcertSeatReservationCommand command) {
         // 대기열 유효성 체크
-        waitingQueueService.existsActiveWaitingQueue(waitingQueueUuid);
+        waitingQueueRepository.existsActiveWaitingQueue(waitingQueueUuid);
 
         // 콘서트 좌석
         ConcertSeat concertSeat = concertRepository.getConcertSeat(command.seatId());

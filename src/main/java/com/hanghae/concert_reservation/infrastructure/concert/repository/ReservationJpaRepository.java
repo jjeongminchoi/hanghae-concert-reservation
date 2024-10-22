@@ -19,7 +19,7 @@ public interface ReservationJpaRepository extends JpaRepository<Reservation, Lon
             "WHERE se.id = :concertSeatId " +
             "AND se.concertSeatStatus = 'AVAILABLE'"
     )
-    ReservationInfoDto getReservationInfo(@Param("concertSeatId") Long concertSeatId);
+    Optional<ReservationInfoDto> getReservationInfo(@Param("concertSeatId") Long concertSeatId);
 
     @Query("SELECT r FROM Reservation r WHERE r.reservationStatus = 'RESERVED' AND r.tempReservedAt < CURRENT_TIMESTAMP")
     List<Reservation> getExpiredTempReservations();

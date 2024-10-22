@@ -31,8 +31,9 @@ public class WaitingQueueRepositoryImpl implements WaitingQueueRepository {
 
     @Override
     public void existWaitingQueueBySessionId(String sessionId) {
-        waitingQueueJpaRepository.findBySessionId(sessionId)
-                .orElseThrow(() -> new BizAlreadyExistsException("대기열이 이미 존재합니다"));
+        if (waitingQueueJpaRepository.findBySessionId(sessionId).isPresent()) {
+            throw new BizAlreadyExistsException("대기열이 이미 존재합니다");
+        }
     }
 
     @Override

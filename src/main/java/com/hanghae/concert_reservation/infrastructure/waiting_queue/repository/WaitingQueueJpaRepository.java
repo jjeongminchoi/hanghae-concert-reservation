@@ -16,7 +16,7 @@ public interface WaitingQueueJpaRepository extends JpaRepository<WaitingQueue, L
 
     Optional<WaitingQueue> findByWaitingQueueUuid(String waitingQueueUuid);
 
-    @Query("SELECT wq FROM WaitingQueue wq WHERE wq.waitingQueueStatus = 'ACTIVE'")
+    @Query("SELECT wq FROM WaitingQueue wq WHERE wq.waitingQueueStatus = 'ACTIVE' AND wq.waitingQueueUuid = :waitingQueueUuid")
     Optional<WaitingQueue> getActiveWaitingQueueByWaitingQueueUuid(String waitingQueueUuid);
 
     @Query("SELECT wq FROM WaitingQueue wq WHERE wq.waitingQueueStatus = 'WAIT' ORDER BY wq.id ASC LIMIT 100")
