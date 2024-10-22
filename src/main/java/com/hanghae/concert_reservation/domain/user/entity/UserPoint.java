@@ -1,7 +1,7 @@
 package com.hanghae.concert_reservation.domain.user.entity;
 
-import com.hanghae.concert_reservation.config.exception.BizIllegalArgumentException;
-import com.hanghae.concert_reservation.config.exception.BizInvalidException;
+import com.hanghae.concert_reservation.common.exception.BizIllegalArgumentException;
+import com.hanghae.concert_reservation.common.exception.BizInvalidException;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;

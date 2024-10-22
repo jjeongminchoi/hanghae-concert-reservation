@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Concert", description = "Concert API")
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/concerts/{concertId}/schedules/{scheduleId}")
+@RequestMapping("/api/v1/concerts/{concertId}/schedules")
 @RestController
 public class ConcertController {
 
@@ -35,7 +35,7 @@ public class ConcertController {
     }
 
     @Operation(summary = "콘서트 좌석 조회", description = "콘서트 좌석을 조회합니다.")
-    @GetMapping("/seats")
+    @GetMapping("/{scheduleId}/seats")
     public ResponseEntity<ConcertSeatsResponse> getSeats(
             @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid,
             @PathVariable Long concertId,
@@ -45,7 +45,7 @@ public class ConcertController {
     }
 
     @Operation(summary = "좌석 임시 예약", description = "5분간 점유할 수 있도록 좌석을 임시 예약합니다.")
-    @PostMapping("/reservations")
+    @PostMapping("/{scheduleId}/reservations")
     public ResponseEntity<ReservationResponse> reserve(
             @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid,
             @PathVariable Long concertId,

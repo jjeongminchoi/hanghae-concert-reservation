@@ -1,5 +1,6 @@
 package com.hanghae.concert_reservation.domain.concert.entity;
 
+import com.hanghae.concert_reservation.common.exception.BizInvalidException;
 import com.hanghae.concert_reservation.domain.concert.constant.ConcertSeatStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -54,5 +55,11 @@ public class ConcertSeat {
     public void changeConcertSeatStatus(ConcertSeatStatus concertSeatStatus) {
         this.concertSeatStatus = concertSeatStatus;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void isAvailable() {
+        if (this.concertSeatStatus != ConcertSeatStatus.AVAILABLE) {
+            throw new BizInvalidException("예약할 수 없는 좌석입니다");
+        }
     }
 }

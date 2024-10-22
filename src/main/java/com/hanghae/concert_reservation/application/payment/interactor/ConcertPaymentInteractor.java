@@ -1,7 +1,7 @@
 package com.hanghae.concert_reservation.application.payment.interactor;
 
 import com.hanghae.concert_reservation.adapter.api.payment.dto.response.PaymentResponse;
-import com.hanghae.concert_reservation.application.payment.dto.command.PaymentCommand;
+import com.hanghae.concert_reservation.domain.payment.dto.command.PaymentCommand;
 import com.hanghae.concert_reservation.application.payment.usecase.ConcertPaymentUseCase;
 import com.hanghae.concert_reservation.domain.payment.service.PaymentService;
 import lombok.RequiredArgsConstructor;
