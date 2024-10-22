@@ -3,11 +3,10 @@ package com.hanghae.concert_reservation.domain.waiting_queue.service;
 import com.hanghae.concert_reservation.config.exception.BizAlreadyExistsException;
 import com.hanghae.concert_reservation.config.exception.BizInvalidException;
 import com.hanghae.concert_reservation.config.exception.BizNotFoundException;
-import com.hanghae.concert_reservation.domain.waiting_queue.WaitingQueue;
-import com.hanghae.concert_reservation.usecase.waiting_queue.WaitingQueueUseCase;
-import com.hanghae.concert_reservation.infrastructure.waiting_queue.WaitingQueueRepository;
-import com.hanghae.concert_reservation.adapter.api.waiting_queue.response.WaitingQueueCreateResponse;
-import com.hanghae.concert_reservation.adapter.api.waiting_queue.response.WaitingQueueResponse;
+import com.hanghae.concert_reservation.domain.waiting_queue.entity.WaitingQueue;
+import com.hanghae.concert_reservation.infrastructure.waiting_queue.repository.WaitingQueueRepository;
+import com.hanghae.concert_reservation.adapter.api.waiting_queue.dto.response.WaitingQueueCreateResponse;
+import com.hanghae.concert_reservation.adapter.api.waiting_queue.dto.response.WaitingQueueResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,12 +16,11 @@ import java.util.UUID;
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
-public class WaitingQueueService implements WaitingQueueUseCase {
+public class WaitingQueueService {
 
     private final WaitingQueueRepository waitingQueueRepository;
 
     @Transactional
-    @Override
     public WaitingQueueCreateResponse createWaitingQueue(String sessionId) {
         waitingQueueRepository.findWaitingQueueBySessionId(sessionId)
                 .orElseThrow(() -> new BizAlreadyExistsException("대기열이 이미 존재합니다"));
@@ -31,7 +29,6 @@ public class WaitingQueueService implements WaitingQueueUseCase {
         return new WaitingQueueCreateResponse(waitingQueue.getWaitingQueueUuid());
     }
 
-    @Override
     public WaitingQueueResponse getWaitingQueue(String waitingQueueUuid) {
         WaitingQueue waitingQueue = waitingQueueRepository.getWaitingQueue(waitingQueueUuid);
 
@@ -47,7 +44,6 @@ public class WaitingQueueService implements WaitingQueueUseCase {
         );
     }
 
-    @Override
     public void existsActiveWaitingQueue(String waitingQueueUuid) {
         WaitingQueue waitingQueue = waitingQueueRepository.getWaitingQueueWithActive(waitingQueueUuid);
         if (waitingQueue == null) throw new BizInvalidException("대기열이 유효하지 않습니다");

@@ -1,6 +1,7 @@
 package com.hanghae.concert_reservation.domain.user;
 
 import com.hanghae.concert_reservation.config.exception.BizIllegalArgumentException;
+import com.hanghae.concert_reservation.domain.user.entity.UserPoint;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

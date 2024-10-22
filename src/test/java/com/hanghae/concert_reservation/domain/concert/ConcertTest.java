@@ -2,6 +2,8 @@ package com.hanghae.concert_reservation.domain.concert;
 
 import com.hanghae.concert_reservation.domain.concert.constant.ConcertSeatStatus;
 import com.hanghae.concert_reservation.domain.concert.constant.ReservationStatus;
+import com.hanghae.concert_reservation.domain.concert.entity.ConcertSeat;
+import com.hanghae.concert_reservation.domain.concert.entity.Reservation;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

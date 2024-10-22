@@ -1,8 +1,7 @@
 package com.hanghae.concert_reservation.domain.waiting_queue.service;
 
-import com.hanghae.concert_reservation.domain.waiting_queue.WaitingQueue;
-import com.hanghae.concert_reservation.infrastructure.waiting_queue.WaitingQueueRepository;
-import com.hanghae.concert_reservation.usecase.waiting_queue.WaitingQueueScheduleUseCase;
+import com.hanghae.concert_reservation.domain.waiting_queue.entity.WaitingQueue;
+import com.hanghae.concert_reservation.infrastructure.waiting_queue.repository.WaitingQueueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,7 +14,7 @@ import java.time.LocalDateTime;
 @Transactional
 @RequiredArgsConstructor
 @Service
-public class WaitingQueueScheduleService implements WaitingQueueScheduleUseCase {
+public class WaitingQueueScheduleService {
 
     private final WaitingQueueRepository waitingQueueRepository;
 
@@ -24,7 +23,6 @@ public class WaitingQueueScheduleService implements WaitingQueueScheduleUseCase 
      * 5분마다 Queue 의 상태가 WAIT 인 Queue 를 앞에서 100명씩 입장시킨다. (WAIT -> ACTIVE / expiredAt: 현재시간 + 10분)
      */
     @Scheduled(cron = "0 */5 * * * *")
-    @Override
     public void activeWaitingQueue() {
         waitingQueueRepository.activeWaitingQueue().forEach(WaitingQueue::activateWaitingQueue);
     }
@@ -34,7 +32,6 @@ public class WaitingQueueScheduleService implements WaitingQueueScheduleUseCase 
      * 10분마다 Queue 의 상태가 ACTIVE 이면서 expiredAt이 10분 경과한 Queue 를 EXPIRED 로 만료 시킨다.
      */
     @Scheduled(cron = "0 */10 * * * *")
-    @Override
     public void expireWaitingQueue() {
         waitingQueueRepository.expireWaitingQueue(LocalDateTime.now()).forEach(WaitingQueue::expireWaitingQueue);
     }

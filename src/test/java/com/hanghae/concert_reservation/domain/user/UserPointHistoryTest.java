@@ -1,6 +1,7 @@
 package com.hanghae.concert_reservation.domain.user;
 
 import com.hanghae.concert_reservation.domain.user.constant.UserPointTransactionType;
+import com.hanghae.concert_reservation.domain.user.entity.UserPointHistory;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;

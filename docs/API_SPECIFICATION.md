@@ -211,13 +211,15 @@
 
 ## 7. 유저 포인트 충전
 
-- **URL**: `POST /api/v1/users/points`
+- **URL**: `POST /api/v1/users/{userId}/points`
 - **설명**: 사용자의 잔액을 충전합니다.
 
 ### 요청
 
 - **Headers**:
   - `Content-Type`: `application/json`
+- **Path Variable**
+  - userId (int): 예약할 콘서트의 고유 ID (필수)
 - **Request Body**:
   ```json
   {

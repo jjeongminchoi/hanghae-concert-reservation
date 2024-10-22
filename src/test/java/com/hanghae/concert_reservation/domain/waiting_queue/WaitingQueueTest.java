@@ -1,6 +1,7 @@
 package com.hanghae.concert_reservation.domain.waiting_queue;
 
 import com.hanghae.concert_reservation.domain.waiting_queue.constant.WaitingQueueStatus;
+import com.hanghae.concert_reservation.domain.waiting_queue.entity.WaitingQueue;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
