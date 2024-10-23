@@ -13,7 +13,7 @@ public class GetWaitingQueueInteractor implements GetWaitingQueueUseCase {
     private final WaitingQueueService waitingQueueService;
 
     @Override
-    public WaitingQueueResponse getWaitingQueue(String waitingQueueUuid) {
-        return waitingQueueService.getWaitingQueue(waitingQueueUuid);
+    public WaitingQueueResponse getWaitingQueue(String sessionId) {
+        return waitingQueueService.getWaitingQueue(sessionId);
     }
 }

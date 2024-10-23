@@ -5,5 +5,5 @@ import com.hanghae.concert_reservation.domain.concert.constant.ConcertScheduleSt
 
 public interface GetConcertSchedulesUseCase {
 
-    ConcertSchedulesResponse getConcertSchedules(String waitingQueueUuid, Long concertId, ConcertScheduleStatus concertScheduleStatus);
+    ConcertSchedulesResponse getConcertSchedules(Long concertId, ConcertScheduleStatus concertScheduleStatus);
 }

@@ -13,7 +13,7 @@ public class GetConcertSeatInteractor implements GetConcertSeatsUseCase {
     private final ConcertService concertService;
 
     @Override
-    public ConcertSeatsResponse getConcertSeats(String waitingQueueUuid, Long concertId, Long concertScheduleId) {
-        return concertService.getConcertSeats(waitingQueueUuid, concertScheduleId);
+    public ConcertSeatsResponse getConcertSeats(Long concertId, Long concertScheduleId) {
+        return concertService.getConcertSeats(concertScheduleId);
     }
 }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface WaitingQueueRepository {
 
-    WaitingQueue getWaitingQueue(String waitingQueueUuid);
+    WaitingQueue getWaitingQueue(String sessionId);
     void existsActiveWaitingQueue(String waitingQueueUuid);
     void existWaitingQueueBySessionId(String sessionId);
     List<WaitingQueue> activeWaitingQueue();

@@ -4,8 +4,6 @@ import com.hanghae.concert_reservation.adapter.api.concert.dto.response.ConcertS
 import com.hanghae.concert_reservation.domain.concert.constant.ConcertScheduleStatus;
 import com.hanghae.concert_reservation.domain.concert.entity.Concert;
 import com.hanghae.concert_reservation.domain.concert.entity.ConcertSchedule;
-import com.hanghae.concert_reservation.domain.waiting_queue.entity.WaitingQueue;
-import com.hanghae.concert_reservation.domain.waiting_queue.repository.WaitingQueueRepository;
 import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertJpaRepository;
 import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertScheduleJpaRepository;
 import org.junit.jupiter.api.Test;
@@ -14,7 +12,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.*;
@@ -22,9 +19,6 @@ import static org.assertj.core.api.Assertions.*;
 @Transactional
 @SpringBootTest
 class GetConcertSchedulesInteractorTest {
-
-    @Autowired
-    private WaitingQueueRepository waitingQueueRepository;
 
     @Autowired
     private ConcertJpaRepository concertJpaRepository;
@@ -38,8 +32,6 @@ class GetConcertSchedulesInteractorTest {
     @Test
     void getConcertSchedules() {
         // given
-        String uuid = UUID.randomUUID().toString();
-        waitingQueueRepository.save(WaitingQueue.from("sessionId", uuid)).activateWaitingQueue();
         Concert concert = concertJpaRepository.save(Concert.of("아이유콘서트"));
         concertScheduleJpaRepository.saveAll(
                 IntStream.range(0, 10)
@@ -48,7 +40,7 @@ class GetConcertSchedulesInteractorTest {
 
         // when
         ConcertSchedulesResponse result =
-                getConcertSchedulesInteractor.getConcertSchedules(uuid, concert.getId(), ConcertScheduleStatus.OPEN);
+                getConcertSchedulesInteractor.getConcertSchedules(concert.getId(), ConcertScheduleStatus.OPEN);
 
         // then
         assertThat(result.concerts().size()).isEqualTo(10);

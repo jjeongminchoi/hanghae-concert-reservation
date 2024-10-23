@@ -13,7 +13,7 @@ public class ConcertPaymentInteractor implements ConcertPaymentUseCase {
 
     private final PaymentService paymentService;
     @Override
-    public PaymentResponse payment(String waitingQueueUuid, PaymentCommand command) {
-        return paymentService.payment(waitingQueueUuid, command);
+    public PaymentResponse payment(PaymentCommand command) {
+        return paymentService.payment(command);
     }
 }

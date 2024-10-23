@@ -12,7 +12,6 @@ import com.hanghae.concert_reservation.domain.user.constant.UserPointTransaction
 import com.hanghae.concert_reservation.domain.user.entity.UserPoint;
 import com.hanghae.concert_reservation.domain.user.entity.UserPointHistory;
 import com.hanghae.concert_reservation.domain.user.repository.UserRepository;
-import com.hanghae.concert_reservation.domain.waiting_queue.repository.WaitingQueueRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,15 +21,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PaymentService {
 
-    private final WaitingQueueRepository waitingQueueRepository;
     private final UserRepository userRepository;
     private final ConcertRepository concertRepository;
     private final PaymentRepository paymentRepository;
 
-    public PaymentResponse payment(String waitingQueueUuid, PaymentCommand command) {
-        // 대기열 유효성 체크
-        waitingQueueRepository.existsActiveWaitingQueue(waitingQueueUuid);
-
+    public PaymentResponse payment(PaymentCommand command) {
         // 예약 확인
         Reservation reservation = concertRepository.existReservedReservation(command.reservationId());
 

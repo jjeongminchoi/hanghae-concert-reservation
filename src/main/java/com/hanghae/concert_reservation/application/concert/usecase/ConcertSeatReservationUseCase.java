@@ -4,5 +4,5 @@ import com.hanghae.concert_reservation.adapter.api.concert.dto.response.Reservat
 import com.hanghae.concert_reservation.domain.concert.dto.command.ConcertSeatReservationCommand;
 
 public interface ConcertSeatReservationUseCase {
-    ReservationResponse reservation(String waitingQueueUuid, ConcertSeatReservationCommand command);
+    ReservationResponse reservation(ConcertSeatReservationCommand command);
 }

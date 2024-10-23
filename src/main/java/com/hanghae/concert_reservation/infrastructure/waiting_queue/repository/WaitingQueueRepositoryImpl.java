@@ -18,8 +18,8 @@ public class WaitingQueueRepositoryImpl implements WaitingQueueRepository {
     private final WaitingQueueJpaRepository waitingQueueJpaRepository;
 
     @Override
-    public WaitingQueue getWaitingQueue(String waitingQueueUuid) {
-        return waitingQueueJpaRepository.findByWaitingQueueUuid(waitingQueueUuid)
+    public WaitingQueue getWaitingQueue(String sessionId) {
+        return waitingQueueJpaRepository.findByWaitingQueueSessionId(sessionId)
                 .orElseThrow(() -> new BizNotFoundException("대기열이 존재하지 않습니다"));
     }
 

@@ -4,5 +4,5 @@ import com.hanghae.concert_reservation.adapter.api.waiting_queue.dto.response.Wa
 
 public interface GetWaitingQueueUseCase {
 
-    WaitingQueueResponse getWaitingQueue(String waitingQueueUuid);
+    WaitingQueueResponse getWaitingQueue(String sessionId);
 }
