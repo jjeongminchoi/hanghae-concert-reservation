@@ -48,7 +48,7 @@ class GetConcertSchedulesInteractorTest {
 
         // when
         ConcertSchedulesResponse result =
-                getConcertSchedulesInteractor.getConcertSchedules(uuid, 1L, ConcertScheduleStatus.OPEN);
+                getConcertSchedulesInteractor.getConcertSchedules(uuid, concert.getId(), ConcertScheduleStatus.OPEN);
 
         // then
         assertThat(result.concerts().size()).isEqualTo(10);

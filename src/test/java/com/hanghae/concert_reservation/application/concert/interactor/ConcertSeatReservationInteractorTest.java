@@ -48,11 +48,11 @@ class ConcertSeatReservationInteractorTest {
         String uuid = UUID.randomUUID().toString();
 
         waitingQueueRepository.save(WaitingQueue.from("sessionId", uuid)).activateWaitingQueue();
-        concertJpaRepository.save(Concert.of("아이유콘서트"));
-        concertScheduleJpaRepository.save(ConcertSchedule.of(1L, LocalDateTime.now(), "콘서트홀"));
-        concertSeatJpaRepository.save(ConcertSeat.of(1L, 1, BigDecimal.valueOf(100000)));
+        Concert concert = concertJpaRepository.save(Concert.of("아이유콘서트"));
+        ConcertSchedule concertSchedule = concertScheduleJpaRepository.save(ConcertSchedule.of(concert.getId(), LocalDateTime.now(), "콘서트홀"));
+        ConcertSeat concertSeat = concertSeatJpaRepository.save(ConcertSeat.of(concertSchedule.getId(), 1, BigDecimal.valueOf(100000)));
 
-        ConcertSeatReservationCommand command = new ConcertSeatReservationCommand(1L, 1L, 1L, 1L);
+        ConcertSeatReservationCommand command = new ConcertSeatReservationCommand(1L, concert.getId(), concertSchedule.getId(), concertSeat.getId());
 
         // when
         ReservationResponse result = concertSeatReservationInteractor.reservation(uuid, command);
@@ -92,9 +92,9 @@ class ConcertSeatReservationInteractorTest {
         String uuid = UUID.randomUUID().toString();
 
         waitingQueueRepository.save(WaitingQueue.from("sessionId", uuid)).activateWaitingQueue();
-        concertSeatJpaRepository.save(ConcertSeat.of(1L, 1, BigDecimal.valueOf(100000)));
+        ConcertSeat concertSeat = concertSeatJpaRepository.save(ConcertSeat.of(1L, 1, BigDecimal.valueOf(100000)));
 
-        ConcertSeatReservationCommand command = new ConcertSeatReservationCommand(1L, 1L, 1L, 1L);
+        ConcertSeatReservationCommand command = new ConcertSeatReservationCommand(1L, 1L, 1L, concertSeat.getId());
 
         // exception
         assertThatThrownBy(() -> concertSeatReservationInteractor.reservation(uuid, command))

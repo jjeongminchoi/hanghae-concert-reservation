@@ -25,13 +25,13 @@ class GetUserPointInteractorTest {
     @Test
     void getUserPoint() {
         // given
-        userPointJpaRepository.save(UserPoint.of(1L, BigDecimal.valueOf(0)));
+        UserPoint userPoint = userPointJpaRepository.save(UserPoint.of(1L, BigDecimal.valueOf(0)));
 
         // when
-        UserPointResponse userPoint = getUserPointInteractor.getUserPoints(1L);
+        UserPointResponse result = getUserPointInteractor.getUserPoints(userPoint.getId());
 
         // then
-        assertThat(userPoint).isNotNull();
-        assertThat(userPoint.balance()).isEqualTo(BigDecimal.valueOf(0));
+        assertThat(result).isNotNull();
+        assertThat(result.balance()).isEqualTo(BigDecimal.valueOf(0));
     }
 }

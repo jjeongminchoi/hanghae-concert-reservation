@@ -59,14 +59,14 @@ class ConcertPaymentInteractorTest {
         String sessionId = Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8));
         String uuid = UUID.randomUUID().toString();
         waitingQueueRepository.save(WaitingQueue.from(sessionId, uuid)).activateWaitingQueue();
+        UserPoint userPoint = userPointJpaRepository.save(UserPoint.of(1L, BigDecimal.valueOf(100000)));
         Concert concert = concertJpaRepository.save(Concert.of("아이유콘서트"));
         ConcertSchedule schedule = concertScheduleJpaRepository.save(ConcertSchedule.of(concert.getId(), LocalDateTime.now(), "콘서트홀"));
         ConcertSeat concertSeat = concertSeatJpaRepository.save(ConcertSeat.of(schedule.getId(), 1, BigDecimal.valueOf(100000)));
-        Reservation reservation = concertRepository.save(Reservation.of(1L, concertSeat.getId(), concert.getName(), schedule.getDate(), concertSeat.getPrice()));
+        Reservation reservation = concertRepository.save(Reservation.of(userPoint.getUserId(), concertSeat.getId(), concert.getName(), schedule.getDate(), concertSeat.getPrice()));
         reservation.setToTemporaryReservationTime();
-        userPointJpaRepository.save(UserPoint.of(1L, BigDecimal.valueOf(100000)));
 
-        PaymentCommand command = new PaymentCommand(1L, reservation.getId());
+        PaymentCommand command = new PaymentCommand(userPoint.getId(), reservation.getId());
 
         // when
         concertPaymentInteractor.payment(uuid, command);
