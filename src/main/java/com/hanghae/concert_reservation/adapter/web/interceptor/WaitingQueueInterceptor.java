@@ -25,6 +25,6 @@ public class WaitingQueueInterceptor implements HandlerInterceptor {
         // 토큰 검증
         waitingQueueService.existsActiveWaitingQueue(waitingQueueUuid);
 
-        return HandlerInterceptor.super.preHandle(request, response, handler);
+        return true;
     }
 }
