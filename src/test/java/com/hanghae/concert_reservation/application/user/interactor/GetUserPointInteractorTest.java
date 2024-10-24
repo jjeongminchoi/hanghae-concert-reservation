@@ -28,7 +28,7 @@ class GetUserPointInteractorTest {
         UserPoint userPoint = userPointJpaRepository.save(UserPoint.of(1L, BigDecimal.valueOf(0)));
 
         // when
-        UserPointResponse result = getUserPointInteractor.getUserPoints(userPoint.getId());
+        UserPointResponse result = getUserPointInteractor.getUserPoints(userPoint.getUserId());
 
         // then
         assertThat(result).isNotNull();

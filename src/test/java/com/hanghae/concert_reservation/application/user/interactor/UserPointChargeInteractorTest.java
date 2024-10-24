@@ -27,7 +27,7 @@ class UserPointChargeInteractorTest {
     void userPointCharge() {
         // given
         UserPoint userPoint = userPointJpaRepository.save(UserPoint.of(1L, BigDecimal.valueOf(0)));
-        UserPointChargeCommand command = new UserPointChargeCommand(userPoint.getId(), BigDecimal.valueOf(10000), UserPointTransactionType.CHARGE);
+        UserPointChargeCommand command = new UserPointChargeCommand(userPoint.getUserId(), BigDecimal.valueOf(10000), UserPointTransactionType.CHARGE);
 
         // when
         userPointChargeInteractor.userPointCharge(command);
