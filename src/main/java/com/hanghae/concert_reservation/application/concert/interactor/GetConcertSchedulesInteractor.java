@@ -14,7 +14,7 @@ public class GetConcertSchedulesInteractor implements GetConcertSchedulesUseCase
     private final ConcertService concertService;
 
     @Override
-    public ConcertSchedulesResponse getConcertSchedules(String waitingQueueUuid, Long concertId, ConcertScheduleStatus concertScheduleStatus) {
-        return concertService.getConcertSchedules(waitingQueueUuid, concertId, concertScheduleStatus);
+    public ConcertSchedulesResponse getConcertSchedules(Long concertId, ConcertScheduleStatus concertScheduleStatus) {
+        return concertService.getConcertSchedules(concertId, concertScheduleStatus);
     }
 }

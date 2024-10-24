@@ -25,8 +25,8 @@ public class WaitingQueueService {
         return new WaitingQueueCreateResponse(waitingQueue.getWaitingQueueUuid());
     }
 
-    public WaitingQueueResponse getWaitingQueue(String waitingQueueUuid) {
-        WaitingQueue waitingQueue = waitingQueueRepository.getWaitingQueue(waitingQueueUuid);
+    public WaitingQueueResponse getWaitingQueue(String sessionId) {
+        WaitingQueue waitingQueue = waitingQueueRepository.getWaitingQueue(sessionId);
 
         return new WaitingQueueResponse(
                 waitingQueue.getId(),

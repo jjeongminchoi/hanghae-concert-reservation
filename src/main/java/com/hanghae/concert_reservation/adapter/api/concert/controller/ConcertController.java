@@ -27,31 +27,28 @@ public class ConcertController {
     @Operation(summary = "콘서트 일정 조회", description = "예약 가능한 콘서트 일정을 조회합니다.")
     @GetMapping
     public ResponseEntity<ConcertSchedulesResponse> getConcertSchedules(
-            @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid,
             @PathVariable Long concertId,
             @RequestParam ConcertScheduleStatus concertScheduleStatus
     ) {
-        return ResponseEntity.ok(getConcertSchedulesUseCase.getConcertSchedules(waitingQueueUuid, concertId, concertScheduleStatus));
+        return ResponseEntity.ok(getConcertSchedulesUseCase.getConcertSchedules(concertId, concertScheduleStatus));
     }
 
     @Operation(summary = "콘서트 좌석 조회", description = "콘서트 좌석을 조회합니다.")
     @GetMapping("/{scheduleId}/seats")
     public ResponseEntity<ConcertSeatsResponse> getSeats(
-            @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid,
             @PathVariable Long concertId,
             @PathVariable Long scheduleId
     ) {
-        return ResponseEntity.ok(getConcertSeatsUseCase.getConcertSeats(waitingQueueUuid, concertId, scheduleId));
+        return ResponseEntity.ok(getConcertSeatsUseCase.getConcertSeats(concertId, scheduleId));
     }
 
     @Operation(summary = "좌석 임시 예약", description = "5분간 점유할 수 있도록 좌석을 임시 예약합니다.")
     @PostMapping("/{scheduleId}/reservations")
     public ResponseEntity<ReservationResponse> reserve(
-            @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid,
             @PathVariable Long concertId,
             @PathVariable Long scheduleId,
             @RequestBody ConcertSeatReservationRequest request
     ) {
-        return ResponseEntity.ok(concertSeatReservationUseCase.reservation(waitingQueueUuid, request.toCommand(concertId, scheduleId)));
+        return ResponseEntity.ok(concertSeatReservationUseCase.reservation(request.toCommand(concertId, scheduleId)));
     }
 }

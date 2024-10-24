@@ -4,6 +4,7 @@ import com.hanghae.concert_reservation.adapter.api.waiting_queue.dto.response.Wa
 import com.hanghae.concert_reservation.adapter.api.waiting_queue.dto.response.WaitingQueueResponse;
 import com.hanghae.concert_reservation.application.waiting_queue.usecase.CreateWaitingQueueUseCase;
 import com.hanghae.concert_reservation.application.waiting_queue.usecase.GetWaitingQueueUseCase;
+import com.hanghae.concert_reservation.common.exception.BizNotFoundException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,7 @@ public class WaitingQueueController {
     @Operation(summary = "대기열 토큰 발급", description = "10분간 유요한 대기열 토큰을 발급합니다.")
     @PostMapping
     public ResponseEntity<WaitingQueueCreateResponse> createWaitingQueue(@RequestHeader("SESSION_ID") String sessionId) {
+        if (sessionId == null || sessionId.isEmpty()) throw new BizNotFoundException("세션이 없습니다");
         return ResponseEntity.ok(createWaitingQueueUseCase.createWaitingQueue(sessionId));
     }
 
@@ -30,9 +32,8 @@ public class WaitingQueueController {
      */
     @Operation(summary = "대기열 토큰 조회", description = "대기열 토큰을 조회합니다.")
     @GetMapping
-    public ResponseEntity<WaitingQueueResponse> getWaitingQueue(
-            @RequestHeader("WAITING-QUEUE-UUID") String waitingQueueUuid
-    ) {
-        return ResponseEntity.ok(getWaitingQueueUseCase.getWaitingQueue(waitingQueueUuid));
+    public ResponseEntity<WaitingQueueResponse> getWaitingQueue(@RequestHeader("SESSION_ID") String sessionId) {
+        if (sessionId == null || sessionId.isEmpty()) throw new BizNotFoundException("세션이 없습니다");
+        return ResponseEntity.ok(getWaitingQueueUseCase.getWaitingQueue(sessionId));
     }
 }

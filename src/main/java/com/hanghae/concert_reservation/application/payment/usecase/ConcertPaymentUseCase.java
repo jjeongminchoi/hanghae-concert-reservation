@@ -5,5 +5,5 @@ import com.hanghae.concert_reservation.domain.payment.dto.command.PaymentCommand
 
 public interface ConcertPaymentUseCase {
 
-    PaymentResponse payment(String waitingQueueUuid, PaymentCommand command);
+    PaymentResponse payment(PaymentCommand command);
 }

@@ -14,7 +14,7 @@ public class ConcertSeatReservationInteractor implements ConcertSeatReservationU
     private final ConcertService concertService;
 
     @Override
-    public ReservationResponse reservation(String waitingQueueUuid, ConcertSeatReservationCommand command) {
-        return concertService.reservation(waitingQueueUuid, command);
+    public ReservationResponse reservation(ConcertSeatReservationCommand command) {
+        return concertService.reservation(command);
     }
 }

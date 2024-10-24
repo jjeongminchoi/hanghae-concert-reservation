@@ -33,7 +33,7 @@ class GetWaitingQueueInteractorTest {
         waitingQueueRepository.save(WaitingQueue.from(sessionId, uuid));
 
         // when
-        WaitingQueueResponse result = getWaitingQueueInteractor.getWaitingQueue(uuid);
+        WaitingQueueResponse result = getWaitingQueueInteractor.getWaitingQueue(sessionId);
 
         // then
         assertThat(result).isNotNull();
@@ -42,10 +42,10 @@ class GetWaitingQueueInteractorTest {
     @Test
     void should_ThrowException_When_NotFound_WaitingQueue() {
         // given
-        String uuid = UUID.randomUUID().toString();
+        String sessionId = Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8));
 
         // exception
-        assertThatThrownBy(() -> getWaitingQueueInteractor.getWaitingQueue(uuid))
+        assertThatThrownBy(() -> getWaitingQueueInteractor.getWaitingQueue(sessionId))
                 .isInstanceOf(BizNotFoundException.class)
                 .hasMessageContaining("대기열이 존재하지 않습니다");
     }

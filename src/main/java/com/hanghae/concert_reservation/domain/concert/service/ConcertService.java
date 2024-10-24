@@ -7,26 +7,23 @@ import com.hanghae.concert_reservation.domain.concert.entity.Reservation;
 import com.hanghae.concert_reservation.domain.concert.constant.ConcertScheduleStatus;
 import com.hanghae.concert_reservation.domain.concert.constant.ConcertSeatStatus;
 import com.hanghae.concert_reservation.domain.concert.repository.ConcertRepository;
-import com.hanghae.concert_reservation.domain.waiting_queue.repository.WaitingQueueRepository;
 import com.hanghae.concert_reservation.domain.concert.dto.ReservationInfoDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class ConcertService {
 
-    private final WaitingQueueRepository waitingQueueRepository;
     private final ConcertRepository concertRepository;
 
-    public ConcertSchedulesResponse getConcertSchedules(String waitingQueueUuid, Long concertId, ConcertScheduleStatus concertScheduleStatus) {
-        // 대기열 유효성 체크
-        waitingQueueRepository.existsActiveWaitingQueue(waitingQueueUuid);
-
+    public ConcertSchedulesResponse getConcertSchedules(Long concertId, ConcertScheduleStatus concertScheduleStatus) {
         // 예약 가능한 콘서트 일정 조회
         List<ConcertScheduleResponse> scheduleResponses = concertRepository.getConcertSchedules(concertId, concertScheduleStatus)
                 .stream()
@@ -40,10 +37,7 @@ public class ConcertService {
         return new ConcertSchedulesResponse(scheduleResponses);
     }
 
-    public ConcertSeatsResponse getConcertSeats(String waitingQueueUuid, Long concertScheduleId) {
-        // 대기열 유효성 체크
-        waitingQueueRepository.existsActiveWaitingQueue(waitingQueueUuid);
-
+    public ConcertSeatsResponse getConcertSeats(Long concertScheduleId) {
         // 콘서트 좌석 조회
         List<ConcertSeatResponse> seatResponses = concertRepository.getConcertSeats(concertScheduleId)
                 .stream()
@@ -64,10 +58,7 @@ public class ConcertService {
     }
 
     @Transactional
-    public ReservationResponse reservation(String waitingQueueUuid, ConcertSeatReservationCommand command) {
-        // 대기열 유효성 체크
-        waitingQueueRepository.existsActiveWaitingQueue(waitingQueueUuid);
-
+    public ReservationResponse reservation(ConcertSeatReservationCommand command) {
         // 콘서트 좌석
         ConcertSeat concertSeat = concertRepository.getConcertSeat(command.seatId());
         concertSeat.isAvailable();
@@ -77,6 +68,8 @@ public class ConcertService {
         Reservation reservation = concertRepository.save(Reservation.of(command.userId(), concertSeat.getId(), reservationInfo.concertName(), reservationInfo.concertDate(), reservationInfo.price()));
         concertSeat.changeConcertSeatStatus(ConcertSeatStatus.TEMPORARILY_RESERVED);
         reservation.setToTemporaryReservationTime();
+
+        log.info("[ReservationInfo]: {}", reservationInfo);
         return new ReservationResponse(reservation.getId());
     }
 }

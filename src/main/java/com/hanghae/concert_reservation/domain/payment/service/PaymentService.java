@@ -12,25 +12,22 @@ import com.hanghae.concert_reservation.domain.user.constant.UserPointTransaction
 import com.hanghae.concert_reservation.domain.user.entity.UserPoint;
 import com.hanghae.concert_reservation.domain.user.entity.UserPointHistory;
 import com.hanghae.concert_reservation.domain.user.repository.UserRepository;
-import com.hanghae.concert_reservation.domain.waiting_queue.repository.WaitingQueueRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class PaymentService {
 
-    private final WaitingQueueRepository waitingQueueRepository;
     private final UserRepository userRepository;
     private final ConcertRepository concertRepository;
     private final PaymentRepository paymentRepository;
 
-    public PaymentResponse payment(String waitingQueueUuid, PaymentCommand command) {
-        // 대기열 유효성 체크
-        waitingQueueRepository.existsActiveWaitingQueue(waitingQueueUuid);
-
+    public PaymentResponse payment(PaymentCommand command) {
         // 예약 확인
         Reservation reservation = concertRepository.existReservedReservation(command.reservationId());
 
@@ -46,6 +43,8 @@ public class PaymentService {
         reservation.changeReservationStatus(ReservationStatus.PAYMENT);
         concertRepository.getConcertSeat(reservation.getConcertSeatId()).changeConcertSeatStatus(ConcertSeatStatus.RESERVED);
 
+        log.info("[PaymentInfo] userId: {}, concertName: {}, concertDate: {}, concertSeatId: {}, price: {}",
+                command.userId(), reservation.getConcertName(), reservation.getConcertDate(), reservation.getConcertSeatId(), reservation.getPrice());
         return new PaymentResponse(payment.getId());
     }
 }
