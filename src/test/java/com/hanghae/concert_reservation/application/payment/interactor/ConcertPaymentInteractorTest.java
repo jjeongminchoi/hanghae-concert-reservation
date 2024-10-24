@@ -56,7 +56,7 @@ class ConcertPaymentInteractorTest {
         Reservation reservation = concertRepository.save(Reservation.of(userPoint.getUserId(), concertSeat.getId(), concert.getName(), schedule.getDate(), concertSeat.getPrice()));
         reservation.setToTemporaryReservationTime();
 
-        PaymentCommand command = new PaymentCommand(userPoint.getId(), reservation.getId());
+        PaymentCommand command = new PaymentCommand(userPoint.getUserId(), reservation.getId());
 
         // when
         PaymentResponse result = concertPaymentInteractor.payment(command);

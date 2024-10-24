@@ -38,10 +38,9 @@ public class ConcertRepositoryImpl implements ConcertRepository {
         return concertSeatJpaRepository.getConcertSeats(concertScheduleId);
     }
 
-    @Lock(LockModeType.OPTIMISTIC)
     @Override
     public ConcertSeat getConcertSeat(Long concertSeatId) {
-        return concertSeatJpaRepository.findById(concertSeatId)
+        return concertSeatJpaRepository.findByIdWithOptimisticLock(concertSeatId)
                 .orElseThrow(() -> new BizNotFoundException("콘서트 좌석을 찾을 수 없습니다."));
     }
 

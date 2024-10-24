@@ -16,7 +16,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public UserPoint getPointByUserId(Long userId) {
-        return userPointJpaRepository.findById(userId)
+        return userPointJpaRepository.findByUserId(userId)
                 .orElseThrow(() -> new BizNotFoundException("유저 포인트가 없습니다."));
     }
 
