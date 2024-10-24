@@ -13,9 +13,11 @@ import com.hanghae.concert_reservation.domain.user.entity.UserPoint;
 import com.hanghae.concert_reservation.domain.user.entity.UserPointHistory;
 import com.hanghae.concert_reservation.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -41,6 +43,8 @@ public class PaymentService {
         reservation.changeReservationStatus(ReservationStatus.PAYMENT);
         concertRepository.getConcertSeat(reservation.getConcertSeatId()).changeConcertSeatStatus(ConcertSeatStatus.RESERVED);
 
+        log.info("[PaymentInfo] userId: {}, concertName: {}, concertDate: {}, concertSeatId: {}, price: {}",
+                command.userId(), reservation.getConcertName(), reservation.getConcertDate(), reservation.getConcertSeatId(), reservation.getPrice());
         return new PaymentResponse(payment.getId());
     }
 }

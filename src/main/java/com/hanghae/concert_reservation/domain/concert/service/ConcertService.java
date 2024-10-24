@@ -9,11 +9,13 @@ import com.hanghae.concert_reservation.domain.concert.constant.ConcertSeatStatus
 import com.hanghae.concert_reservation.domain.concert.repository.ConcertRepository;
 import com.hanghae.concert_reservation.domain.concert.dto.ReservationInfoDto;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Slf4j
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
@@ -66,6 +68,8 @@ public class ConcertService {
         Reservation reservation = concertRepository.save(Reservation.of(command.userId(), concertSeat.getId(), reservationInfo.concertName(), reservationInfo.concertDate(), reservationInfo.price()));
         concertSeat.changeConcertSeatStatus(ConcertSeatStatus.TEMPORARILY_RESERVED);
         reservation.setToTemporaryReservationTime();
+
+        log.info("[ReservationInfo]: {}", reservationInfo);
         return new ReservationResponse(reservation.getId());
     }
 }
