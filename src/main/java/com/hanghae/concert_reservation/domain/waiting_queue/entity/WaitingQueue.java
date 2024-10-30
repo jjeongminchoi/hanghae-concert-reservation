@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Table(name = "waiting_queue")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

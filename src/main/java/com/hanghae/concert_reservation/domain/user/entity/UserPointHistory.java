@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Table(name = "user_point_history")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

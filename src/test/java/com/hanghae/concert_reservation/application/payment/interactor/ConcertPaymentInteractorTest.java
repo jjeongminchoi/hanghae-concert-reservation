@@ -3,6 +3,7 @@ package com.hanghae.concert_reservation.application.payment.interactor;
 import com.hanghae.concert_reservation.adapter.api.payment.dto.response.PaymentResponse;
 import com.hanghae.concert_reservation.common.exception.BizIllegalArgumentException;
 import com.hanghae.concert_reservation.common.exception.BizNotFoundException;
+import com.hanghae.concert_reservation.config.DatabaseCleanUp;
 import com.hanghae.concert_reservation.domain.concert.entity.Concert;
 import com.hanghae.concert_reservation.domain.concert.entity.ConcertSchedule;
 import com.hanghae.concert_reservation.domain.concert.entity.ConcertSeat;
@@ -14,17 +15,18 @@ import com.hanghae.concert_reservation.infrastructure.concert.repository.Concert
 import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertScheduleJpaRepository;
 import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertSeatJpaRepository;
 import com.hanghae.concert_reservation.infrastructure.user.repository.UserPointJpaRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
 
-@Transactional
+@ActiveProfiles("test")
 @SpringBootTest
 class ConcertPaymentInteractorTest {
 
@@ -46,6 +48,14 @@ class ConcertPaymentInteractorTest {
     @Autowired
     private ConcertPaymentInteractor concertPaymentInteractor;
 
+    @Autowired
+    private DatabaseCleanUp databaseCleanUp;
+
+    @BeforeEach
+    void setUp() {
+        databaseCleanUp.execute();
+    }
+
     @Test
     void payment_success() {
         // given
@@ -54,7 +64,6 @@ class ConcertPaymentInteractorTest {
         ConcertSchedule schedule = concertScheduleJpaRepository.save(ConcertSchedule.of(concert.getId(), LocalDateTime.now(), "콘서트홀"));
         ConcertSeat concertSeat = concertSeatJpaRepository.save(ConcertSeat.of(schedule.getId(), 1, BigDecimal.valueOf(100000)));
         Reservation reservation = concertRepository.save(Reservation.of(userPoint.getUserId(), concertSeat.getId(), concert.getName(), schedule.getDate(), concertSeat.getPrice()));
-        reservation.setToTemporaryReservationTime();
 
         PaymentCommand command = new PaymentCommand(userPoint.getUserId(), reservation.getId());
 
@@ -83,7 +92,6 @@ class ConcertPaymentInteractorTest {
         ConcertSchedule schedule = concertScheduleJpaRepository.save(ConcertSchedule.of(concert.getId(), LocalDateTime.now(), "콘서트홀"));
         ConcertSeat concertSeat = concertSeatJpaRepository.save(ConcertSeat.of(schedule.getId(), 1, BigDecimal.valueOf(100000)));
         Reservation reservation = concertRepository.save(Reservation.of(1L, concertSeat.getId(), concert.getName(), schedule.getDate(), concertSeat.getPrice()));
-        reservation.setToTemporaryReservationTime();
 
         PaymentCommand command = new PaymentCommand(1L, reservation.getId());
 
@@ -100,7 +108,6 @@ class ConcertPaymentInteractorTest {
         ConcertSchedule schedule = concertScheduleJpaRepository.save(ConcertSchedule.of(concert.getId(), LocalDateTime.now(), "콘서트홀"));
         ConcertSeat concertSeat = concertSeatJpaRepository.save(ConcertSeat.of(schedule.getId(), 1, BigDecimal.valueOf(100000)));
         Reservation reservation = concertRepository.save(Reservation.of(1L, concertSeat.getId(), concert.getName(), schedule.getDate(), concertSeat.getPrice()));
-        reservation.setToTemporaryReservationTime();
         userPointJpaRepository.save(UserPoint.of(1L, BigDecimal.valueOf(0)));
 
         PaymentCommand command = new PaymentCommand(1L, reservation.getId());

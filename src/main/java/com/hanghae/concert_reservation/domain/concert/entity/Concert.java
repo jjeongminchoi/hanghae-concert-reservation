@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Table(name = "concert")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

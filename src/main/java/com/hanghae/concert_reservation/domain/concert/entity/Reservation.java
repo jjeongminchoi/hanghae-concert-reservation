@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Table(name = "reservation")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -55,15 +56,11 @@ public class Reservation {
         this.reservationStatus = ReservationStatus.RESERVED;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.tempReservedAt = LocalDateTime.now().plusMinutes(5); // 5분간 임시 예약
     }
 
     public static Reservation of(Long userId, Long concertSeatId, String concertName, LocalDateTime concertDate, BigDecimal price) {
         return new Reservation(userId, concertSeatId, concertName, concertDate, price);
-    }
-
-    public void setToTemporaryReservationTime() {
-        this.tempReservedAt = LocalDateTime.now().plusMinutes(5); // 5분간 임시 예약
-        this.updatedAt = LocalDateTime.now();
     }
 
     public void changeReservationStatus(ReservationStatus reservationStatus) {

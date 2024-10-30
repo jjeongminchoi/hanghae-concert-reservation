@@ -16,8 +16,7 @@ public interface ReservationJpaRepository extends JpaRepository<Reservation, Lon
             "FROM Concert c " +
             "JOIN ConcertSchedule cs ON c.id = cs.concertId " +
             "JOIN ConcertSeat se ON cs.id = se.concertScheduleId " +
-            "WHERE se.id = :concertSeatId " +
-            "AND se.concertSeatStatus = 'AVAILABLE'"
+            "WHERE se.id = :concertSeatId"
     )
     Optional<ReservationInfoDto> getReservationInfo(@Param("concertSeatId") Long concertSeatId);
 

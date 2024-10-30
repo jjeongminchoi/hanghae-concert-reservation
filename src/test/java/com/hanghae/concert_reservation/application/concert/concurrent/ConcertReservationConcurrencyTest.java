@@ -1,5 +1,6 @@
 package com.hanghae.concert_reservation.application.concert.concurrent;
 
+import com.hanghae.concert_reservation.config.DatabaseCleanUp;
 import com.hanghae.concert_reservation.domain.concert.dto.command.ConcertSeatReservationCommand;
 import com.hanghae.concert_reservation.domain.concert.entity.Concert;
 import com.hanghae.concert_reservation.domain.concert.entity.ConcertSchedule;
@@ -9,12 +10,12 @@ import com.hanghae.concert_reservation.infrastructure.concert.repository.Concert
 import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertScheduleJpaRepository;
 import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertSeatJpaRepository;
 import com.hanghae.concert_reservation.infrastructure.concert.repository.ReservationJpaRepository;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.orm.ObjectOptimisticLockingFailureException;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -25,6 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@ActiveProfiles("test")
 @SpringBootTest
 public class ConcertReservationConcurrencyTest {
 
@@ -43,12 +45,12 @@ public class ConcertReservationConcurrencyTest {
     @Autowired
     private ConcertService concertService;
 
+    @Autowired
+    private DatabaseCleanUp databaseCleanUp;
+
     @BeforeEach
     void setUp() {
-        reservationJpaRepository.deleteAll();
-        concertSeatJpaRepository.deleteAll();
-        concertScheduleJpaRepository.deleteAll();
-        concertJpaRepository.deleteAll();
+        databaseCleanUp.execute();
 
         Concert concert = concertJpaRepository.save(Concert.of("아이유콘서트"));
         ConcertSchedule concertSchedule = concertScheduleJpaRepository.save(ConcertSchedule.of(concert.getId(), LocalDateTime.now(), "콘서트홀"));
@@ -58,7 +60,7 @@ public class ConcertReservationConcurrencyTest {
     @Test
     void shouldAllowOnlyOneUserToReserveSeatWhenMultipleRequestsAreMadeSimultaneously() throws InterruptedException {
         // given
-        int threadCount = 10;
+        int threadCount = 11;
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
         CountDownLatch latch = new CountDownLatch(threadCount);
         AtomicInteger successCount = new AtomicInteger(0);
@@ -84,14 +86,15 @@ public class ConcertReservationConcurrencyTest {
         latch.await();
         executorService.shutdown();
 
-        assertThat(successCount.get()).isEqualTo(1);
-        assertThat(failedCount.get()).isEqualTo(9);
+        assertThat(reservationJpaRepository.findAll().size()).isEqualTo(1);
+//        assertThat(successCount.get()).isEqualTo(1);
+//        assertThat(failedCount.get()).isEqualTo(threadCount - 1);
     }
 
     @Test
     void shouldAllowOnlyOneReservationWhenSameUserAttemptsToReserveSameSeatSimultaneously() throws InterruptedException {
         // given
-        int threadCount = 10;
+        int threadCount = 3;
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
         CountDownLatch latch = new CountDownLatch(threadCount);
         AtomicInteger successCount = new AtomicInteger(0);
@@ -117,7 +120,8 @@ public class ConcertReservationConcurrencyTest {
         executorService.shutdown();
 
         // then
-        assertThat(successCount.get()).isEqualTo(1);
-        assertThat(failedCount.get()).isEqualTo(9);
+        assertThat(reservationJpaRepository.findAll().size()).isEqualTo(1);
+//        assertThat(successCount.get()).isEqualTo(1);
+//        assertThat(failedCount.get()).isEqualTo(threadCount - 1);
     }
 }

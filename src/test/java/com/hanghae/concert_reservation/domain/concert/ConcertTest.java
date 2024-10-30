@@ -27,23 +27,6 @@ class ConcertTest {
     }
 
     @Test
-    void setToTemporaryReservationTime_Should_SetTempReservedAtAndUpdatedAt() {
-        // given
-        LocalDateTime now = LocalDateTime.now();
-        Reservation reservation = Reservation.of(1L, 1L, "아이유콘서트", now, BigDecimal.valueOf(100000));
-
-        // when
-        reservation.setToTemporaryReservationTime();
-
-        // then
-        assertThat(reservation.getTempReservedAt()).isAfter(now.plusMinutes(4));
-        assertThat(reservation.getTempReservedAt()).isBefore(now.plusMinutes(6));
-
-        assertThat(reservation.getUpdatedAt()).isAfter(now);
-        assertThat(reservation.getUpdatedAt()).isBefore(now.plusMinutes(1));
-    }
-
-    @Test
     void changeReservationStatus() {
         // given
         Reservation reservation = Reservation.of(1L, 1L, "아이유콘서트", LocalDateTime.now(), BigDecimal.valueOf(100000));

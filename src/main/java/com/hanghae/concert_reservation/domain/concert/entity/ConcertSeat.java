@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Table(name = "concert_seat")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

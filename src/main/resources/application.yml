@@ -2,7 +2,7 @@ spring:
   application:
     name: concert-reservation
   datasource:
-    url: jdbc:h2:mem:concert-reservation
+    url: jdbc:h2:mem:concert-reservation;MODE=MySQL
     username: sa
     password:
     driver-class-name: org.h2.Driver

@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+@Table(name = "user_point")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity

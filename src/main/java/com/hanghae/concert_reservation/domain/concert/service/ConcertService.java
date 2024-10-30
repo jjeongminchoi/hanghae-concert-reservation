@@ -64,10 +64,9 @@ public class ConcertService {
         concertSeat.isAvailable();
 
         // 콘서트 예약
+        concertSeat.changeConcertSeatStatus(ConcertSeatStatus.TEMPORARILY_RESERVED);
         ReservationInfoDto reservationInfo = concertRepository.getReservationInfo(concertSeat.getId());
         Reservation reservation = concertRepository.save(Reservation.of(command.userId(), concertSeat.getId(), reservationInfo.concertName(), reservationInfo.concertDate(), reservationInfo.price()));
-        concertSeat.changeConcertSeatStatus(ConcertSeatStatus.TEMPORARILY_RESERVED);
-        reservation.setToTemporaryReservationTime();
 
         log.info("[ReservationInfo]: {}", reservationInfo);
         return new ReservationResponse(reservation.getId());

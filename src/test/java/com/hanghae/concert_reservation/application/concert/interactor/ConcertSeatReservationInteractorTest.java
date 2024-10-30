@@ -2,6 +2,7 @@ package com.hanghae.concert_reservation.application.concert.interactor;
 
 import com.hanghae.concert_reservation.adapter.api.concert.dto.response.ReservationResponse;
 import com.hanghae.concert_reservation.common.exception.BizNotFoundException;
+import com.hanghae.concert_reservation.config.DatabaseCleanUp;
 import com.hanghae.concert_reservation.domain.concert.dto.command.ConcertSeatReservationCommand;
 import com.hanghae.concert_reservation.domain.concert.entity.Concert;
 import com.hanghae.concert_reservation.domain.concert.entity.ConcertSchedule;
@@ -9,17 +10,18 @@ import com.hanghae.concert_reservation.domain.concert.entity.ConcertSeat;
 import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertJpaRepository;
 import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertScheduleJpaRepository;
 import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertSeatJpaRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import static org.assertj.core.api.Assertions.*;
 
-@Transactional
+@ActiveProfiles("test")
 @SpringBootTest
 class ConcertSeatReservationInteractorTest {
 
@@ -34,6 +36,14 @@ class ConcertSeatReservationInteractorTest {
 
     @Autowired
     private ConcertSeatReservationInteractor concertSeatReservationInteractor;
+
+    @Autowired
+    private DatabaseCleanUp databaseCleanUp;
+
+    @BeforeEach
+    void setUp() {
+        databaseCleanUp.execute();
+    }
 
     @Test
     void concertReservation() {
