@@ -14,15 +14,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -60,24 +61,24 @@ public class ConcertReservationConcurrencyTest {
     @Test
     void shouldAllowOnlyOneUserToReserveSeatWhenMultipleRequestsAreMadeSimultaneously() throws InterruptedException {
         // given
-        int threadCount = 11;
-        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+        int threadCount = 200;
+        ExecutorService executorService = Executors.newFixedThreadPool(16);
         CountDownLatch latch = new CountDownLatch(threadCount);
-        AtomicInteger successCount = new AtomicInteger(0);
-        AtomicInteger failedCount = new AtomicInteger(0);
 
+        List<Long> executionTimes = Collections.synchronizedList(new ArrayList<>());
+        long startTime = System.currentTimeMillis();  // 전체 테스트 시작 시간
 
         // when
         for (int i = 0; i < threadCount; i++) {
             final int index = i;
             executorService.submit(() -> {
+                long taskStartTime = System.currentTimeMillis();  // 작업 시작 시간
                 try {
                     ConcertSeatReservationCommand command = new ConcertSeatReservationCommand((long) index + 1, 1L, 1L, 1L);
                     concertService.reservation(command);
-                    successCount.incrementAndGet();
-                } catch (ObjectOptimisticLockingFailureException e) {
-                    failedCount.incrementAndGet();
                 } finally {
+                    long taskEndTime = System.currentTimeMillis();  // 작업 종료 시간
+                    executionTimes.add(taskEndTime - taskStartTime);  // 작업 수행 시간 기록
                     latch.countDown();
                 }
             });
@@ -86,9 +87,21 @@ public class ConcertReservationConcurrencyTest {
         latch.await();
         executorService.shutdown();
 
+        long endTime = System.currentTimeMillis();  // 전체 테스트 종료 시간
+        long totalTime = endTime - startTime;  // 전체 테스트 수행 시간
+
+        // 통계 계산
+        long minTime = executionTimes.stream().min(Long::compare).orElse(0L);  // 최소 작업 수행 시간
+        long maxTime = executionTimes.stream().max(Long::compare).orElse(0L);  // 최대 작업 수행 시간
+        double avgTime = executionTimes.stream().mapToLong(Long::longValue).average().orElse(0.0);  // 평균 작업 수행 시간
+
+        // 결과 출력
+        System.out.println("전체 테스트 수행 시간: " + totalTime + "ms");
+        System.out.println("최소 작업 수행 시간: " + minTime + "ms");
+        System.out.println("최대 작업 수행 시간: " + maxTime + "ms");
+        System.out.println("평균 작업 수행 시간: " + avgTime + "ms");
+
         assertThat(reservationJpaRepository.findAll().size()).isEqualTo(1);
-//        assertThat(successCount.get()).isEqualTo(1);
-//        assertThat(failedCount.get()).isEqualTo(threadCount - 1);
     }
 
     @Test
@@ -97,8 +110,6 @@ public class ConcertReservationConcurrencyTest {
         int threadCount = 3;
         ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
         CountDownLatch latch = new CountDownLatch(threadCount);
-        AtomicInteger successCount = new AtomicInteger(0);
-        AtomicInteger failedCount = new AtomicInteger(0);
 
         ConcertSeatReservationCommand command = new ConcertSeatReservationCommand(1L, 1L, 1L, 1L);
 
@@ -107,9 +118,6 @@ public class ConcertReservationConcurrencyTest {
             executorService.submit(() -> {
                 try {
                     concertService.reservation(command);
-                    successCount.incrementAndGet();
-                } catch (ObjectOptimisticLockingFailureException e) {
-                    failedCount.incrementAndGet();
                 } finally {
                     latch.countDown();
                 }
@@ -121,7 +129,5 @@ public class ConcertReservationConcurrencyTest {
 
         // then
         assertThat(reservationJpaRepository.findAll().size()).isEqualTo(1);
-//        assertThat(successCount.get()).isEqualTo(1);
-//        assertThat(failedCount.get()).isEqualTo(threadCount - 1);
     }
 }
