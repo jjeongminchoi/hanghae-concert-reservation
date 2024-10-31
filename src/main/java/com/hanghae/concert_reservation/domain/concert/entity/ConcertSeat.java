@@ -40,9 +40,6 @@ public class ConcertSeat {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    @Version
-    private Long version;
-
     private ConcertSeat(Long concertScheduleId, int seatNumber, BigDecimal price) {
         this.concertScheduleId = concertScheduleId;
         this.seatNumber = seatNumber;

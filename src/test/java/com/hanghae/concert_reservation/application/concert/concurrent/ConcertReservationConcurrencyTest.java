@@ -1,5 +1,6 @@
 package com.hanghae.concert_reservation.application.concert.concurrent;
 
+import com.hanghae.concert_reservation.application.concert.interactor.ConcertSeatReservationInteractor;
 import com.hanghae.concert_reservation.config.DatabaseCleanUp;
 import com.hanghae.concert_reservation.domain.concert.dto.command.ConcertSeatReservationCommand;
 import com.hanghae.concert_reservation.domain.concert.entity.Concert;
@@ -47,6 +48,9 @@ public class ConcertReservationConcurrencyTest {
     private ConcertService concertService;
 
     @Autowired
+    private ConcertSeatReservationInteractor concertSeatReservationInteractor;
+
+    @Autowired
     private DatabaseCleanUp databaseCleanUp;
 
     @BeforeEach
@@ -75,7 +79,7 @@ public class ConcertReservationConcurrencyTest {
                 long taskStartTime = System.currentTimeMillis();  // 작업 시작 시간
                 try {
                     ConcertSeatReservationCommand command = new ConcertSeatReservationCommand((long) index + 1, 1L, 1L, 1L);
-                    concertService.reservation(command);
+                    concertSeatReservationInteractor.reservation(command);
                 } finally {
                     long taskEndTime = System.currentTimeMillis();  // 작업 종료 시간
                     executionTimes.add(taskEndTime - taskStartTime);  // 작업 수행 시간 기록
