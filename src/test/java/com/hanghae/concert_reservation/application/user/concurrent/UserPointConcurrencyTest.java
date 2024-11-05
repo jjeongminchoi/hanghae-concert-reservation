@@ -38,7 +38,7 @@ public class UserPointConcurrencyTest {
         UserPointChargeCommand command = new UserPointChargeCommand(userPoint.getUserId(), BigDecimal.valueOf(10000), UserPointTransactionType.CHARGE);
 
         int threadCount = 10;
-        ExecutorService executorService = Executors.newFixedThreadPool(threadCount);
+        ExecutorService executorService = Executors.newFixedThreadPool(16);
         CountDownLatch latch = new CountDownLatch(threadCount);
 
         // when
@@ -58,5 +58,35 @@ public class UserPointConcurrencyTest {
         // then
         UserPoint res = userPointJpaRepository.findById(userPoint.getId()).get();
         assertThat(res.getBalance().longValue()).isEqualTo(BigDecimal.valueOf(100000).longValue());
+    }
+
+    @Test
+    void shouldHandleConcurrentPointChargingAndUsage() throws InterruptedException {
+        // given
+        UserPoint userPoint = userPointJpaRepository.save(UserPoint.of(1L, BigDecimal.valueOf(0)));
+        UserPointChargeCommand command = new UserPointChargeCommand(userPoint.getUserId(), BigDecimal.valueOf(10000), UserPointTransactionType.CHARGE);
+
+        int threadCount = 3;
+        ExecutorService executorService = Executors.newFixedThreadPool(16);
+        CountDownLatch latch = new CountDownLatch(threadCount);
+
+        // when
+        for (int i = 0; i < threadCount; i++) {
+            executorService.submit(() -> {
+                try {
+                    userService.userPointCharge(command);
+                    userService.userPointUse(userPoint.getUserId(), BigDecimal.valueOf(5000));
+                } finally {
+                    latch.countDown();
+                }
+            });
+        }
+
+        latch.await();
+        executorService.shutdown();
+
+        // then
+        UserPoint res = userPointJpaRepository.findById(userPoint.getId()).get();
+        assertThat(res.getBalance().longValue()).isEqualTo(BigDecimal.valueOf(15000).longValue());
     }
 }
