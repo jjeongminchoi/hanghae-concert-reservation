@@ -36,7 +36,7 @@ public class RedisQueueRepositoryImpl implements WaitingQueueRepository {
     }
 
     public void moveToActiveQueue() {
-        Set<String> itemsToMove = redisTemplate.opsForZSet().rangeByScore(WAITING_QUEUE_KEY, 0, System.currentTimeMillis());
+        Set<String> itemsToMove = redisTemplate.opsForZSet().range(WAITING_QUEUE_KEY, 0, 100);
 
         for (String item : itemsToMove) {
             // 대기열에서 제거
