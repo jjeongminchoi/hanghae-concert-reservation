@@ -10,6 +10,7 @@ import com.hanghae.concert_reservation.domain.concert.repository.ConcertReposito
 import com.hanghae.concert_reservation.domain.concert.dto.ReservationInfoDto;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ public class ConcertService {
 
     private final ConcertRepository concertRepository;
 
+    @Cacheable(value = "concertSchedules", key = "#concertId")
     public ConcertSchedulesResponse getConcertSchedules(Long concertId, ConcertScheduleStatus concertScheduleStatus) {
         // 예약 가능한 콘서트 일정 조회
         List<ConcertScheduleResponse> scheduleResponses = concertRepository.getConcertSchedules(concertId, concertScheduleStatus)
