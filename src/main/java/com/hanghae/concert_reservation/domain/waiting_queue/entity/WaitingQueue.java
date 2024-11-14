@@ -53,9 +53,4 @@ public class WaitingQueue {
         this.waitingQueueStatus = WaitingQueueStatus.ACTIVE;
         this.expiredAt = LocalDateTime.now().plusMinutes(10);
     }
-
-    public void expireWaitingQueue() {
-        this.waitingQueueStatus = WaitingQueueStatus.EXPIRE;
-        this.updatedAt = LocalDateTime.now();
-    }
 }

@@ -6,8 +6,7 @@ import lombok.Getter;
 public enum WaitingQueueStatus {
 
     WAIT("대기열 대기 상태"),
-    ACTIVE("대기열 활성 상태"),
-    EXPIRE("대기열 만료 상태");
+    ACTIVE("대기열 활성 상태");
 
     private final String desc;
 
