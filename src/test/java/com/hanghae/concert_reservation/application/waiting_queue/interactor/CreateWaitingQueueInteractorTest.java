@@ -2,11 +2,11 @@ package com.hanghae.concert_reservation.application.waiting_queue.interactor;
 
 import com.hanghae.concert_reservation.adapter.api.waiting_queue.dto.response.WaitingQueueCreateResponse;
 import com.hanghae.concert_reservation.common.exception.BizAlreadyExistsException;
-import com.hanghae.concert_reservation.domain.waiting_queue.entity.WaitingQueue;
 import com.hanghae.concert_reservation.domain.waiting_queue.repository.WaitingQueueRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
@@ -25,6 +25,9 @@ class CreateWaitingQueueInteractorTest {
     @Autowired
     private CreateWaitingQueueInteractor createWaitingQueueInteractor;
 
+    @Autowired
+    private RedisTemplate<String, String> redisTemplate;
+
     @Test
     void createWaitingQueue() {
         // given
@@ -42,7 +45,8 @@ class CreateWaitingQueueInteractorTest {
         // given
         String sessionId = Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8));
         String uuid = UUID.randomUUID().toString();
-        waitingQueueRepository.save(WaitingQueue.from(sessionId, uuid));
+        redisTemplate.opsForZSet().score("waiting_queue", uuid);
+//        waitingQueueRepository.save(WaitingQueue.from(sessionId, uuid));
 
         // exception
         assertThatThrownBy(() -> createWaitingQueueInteractor.createWaitingQueue(sessionId))
