@@ -11,19 +11,19 @@ import org.springframework.scheduling.annotation.Scheduled;
 @RequiredArgsConstructor
 @EnableScheduling
 @Configuration
-public class SchedulerConfig {
+public class WaitingQueueSchedulerConfig {
 
     private final WaitingQueueRepository waitingQueueRepository;
 
     /**
      * 대기열에서 활성열로 이동
      */
-//    @Scheduled(fixedRate = 60000)
+    @Scheduled(fixedRate = 60000)
     public void moveToActiveQueue() {
         try {
             waitingQueueRepository.moveToActiveQueue();
         } catch (Exception e) {
-            log.error("[ERROR] queue moveToActiveQueue failed={}", e.getMessage(), e);
+            log.error("[ERROR] WaitingQueue moveToActiveQueue failed={}", e.getMessage(), e);
         }
     }
 }
