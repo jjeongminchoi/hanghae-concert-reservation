@@ -1,6 +1,7 @@
 package com.hanghae.concert_reservation.domain.payment.kafka;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanghae.concert_reservation.infrastructure.kafka.payment.KafkaProducer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

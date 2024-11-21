@@ -9,7 +9,7 @@ import com.hanghae.concert_reservation.domain.concert.constant.ConcertSeatStatus
 import com.hanghae.concert_reservation.domain.concert.constant.ReservationStatus;
 import com.hanghae.concert_reservation.domain.payment.entity.Payment;
 import com.hanghae.concert_reservation.domain.payment.event.PaymentEventPublisher;
-import com.hanghae.concert_reservation.domain.payment.event.PaymentInfoEvent;
+import com.hanghae.concert_reservation.domain.payment.event.dto.PaymentInfoEvent;
 import com.hanghae.concert_reservation.domain.payment.repository.PaymentRepository;
 import com.hanghae.concert_reservation.domain.user.constant.UserPointTransactionType;
 import com.hanghae.concert_reservation.domain.user.entity.UserPoint;
@@ -19,6 +19,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.UUID;
 
 @Slf4j
 @Transactional(readOnly = true)
@@ -48,8 +50,9 @@ public class PaymentService {
         reservation.changeReservationStatus(ReservationStatus.PAYMENT);
         concertRepository.getConcertSeat(reservation.getConcertSeatId()).changeConcertSeatStatus(ConcertSeatStatus.RESERVED);
 
+        // 결제 이벤트 발행
         ReservationInfoDto reservationInfo = concertRepository.getReservationInfo(reservation.getConcertSeatId());
-        paymentEventPublisher.publish(new PaymentInfoEvent(reservationInfo.concertName(), reservation.getConcertSeatId(), reservation.getPrice()));
+        paymentEventPublisher.publish(new PaymentInfoEvent(UUID.randomUUID().toString(), "PaymentExternalEvent", reservation.getConcertSeatId(), reservationInfo.concertName(), reservation.getPrice()));
 
         log.info("[PaymentInfo] userId: {}, concertName: {}, concertDate: {}, concertSeatId: {}, price: {}",
                 command.userId(), reservation.getConcertName(), reservation.getConcertDate(), reservation.getConcertSeatId(), reservation.getPrice());
