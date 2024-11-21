@@ -31,6 +31,7 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentEventPublisher paymentEventPublisher;
 
+    @Transactional
     public PaymentResponse payment(PaymentCommand command) {
         // 예약 확인
         Reservation reservation = concertRepository.existReservedReservation(command.reservationId());

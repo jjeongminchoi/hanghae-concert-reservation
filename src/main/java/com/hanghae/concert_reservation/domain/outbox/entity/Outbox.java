@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 @Table(
         name = "outbox",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"eventId", "eventType"}),
+        uniqueConstraints = @UniqueConstraint(columnNames = {"eventKey", "eventType"}),
         indexes = @Index(name = "idx_status", columnList = "status")
 )
 @Getter
@@ -24,12 +24,12 @@ public class Outbox {
     private Long id;
 
     @Column(nullable = false)
-    private Long eventId;
+    private String eventKey;
 
     @Column(nullable = false)
     private String eventType;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String payload;
 
     @Column(nullable = false)
@@ -41,6 +41,19 @@ public class Outbox {
 
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    private Outbox(String eventKey, String eventType, String payload) {
+        this.eventKey = eventKey;
+        this.eventType = eventType;
+        this.payload = payload;
+        this.status = OutboxStatus.INIT;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+
+    public static Outbox of(String eventKey, String eventType, String payload) {
+        return new Outbox(eventKey, eventType, payload);
+    }
 
     public void updateStatus(OutboxStatus status) {
         this.status = status;
