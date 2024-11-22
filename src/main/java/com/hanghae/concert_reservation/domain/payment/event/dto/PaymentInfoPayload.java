@@ -1,7 +1,10 @@
 package com.hanghae.concert_reservation.domain.payment.event.dto;
 
+import lombok.Getter;
+
 import java.math.BigDecimal;
 
+@Getter
 public class PaymentInfoPayload {
 
     private Long concertSeatId;

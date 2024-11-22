@@ -1,7 +1,7 @@
 package com.hanghae.concert_reservation.domain.payment.kafka;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanghae.concert_reservation.infrastructure.kafka.payment.KafkaProducer;
+import com.hanghae.concert_reservation.infrastructure.kafka.payment.PaymentProducer;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class KafkaProducerTest {
 
     @Autowired
-    private KafkaProducer kafkaProducer;
+    private PaymentProducer paymentProducer;
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -36,7 +36,7 @@ public class KafkaProducerTest {
         Object message = "{message: test topic message}";
 
         // When
-        kafkaProducer.sendMessage(topic, message);
+        paymentProducer.sendMessage(topic, message);
         Thread.sleep(2000);
 
         // Then
