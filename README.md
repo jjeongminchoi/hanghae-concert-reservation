@@ -10,6 +10,7 @@
 6. [Swaager Web UI](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/feat/step7/docs/SWAGGER_UI.md)
 7. [Concurrent Control](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/docs/step11-12/docs/CONCURRENT_CONTROL.md)
 8. [DB_OPTIMIZATION](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/main/docs/DB_OPTIMIZATION.md)
+9. [EVENT](https://github.com/jjeongminchoi/hanghae-concert-reservation/blob/main/docs/EVENT.md)
 
 ---
 
