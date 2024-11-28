@@ -5,9 +5,9 @@ import com.hanghae.concert_reservation.domain.concert.constant.ConcertSeatStatus
 import com.hanghae.concert_reservation.domain.concert.entity.Concert;
 import com.hanghae.concert_reservation.domain.concert.entity.ConcertSchedule;
 import com.hanghae.concert_reservation.domain.concert.entity.ConcertSeat;
-import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertJpaRepository;
-import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertScheduleJpaRepository;
-import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertSeatJpaRepository;
+import com.hanghae.concert_reservation.infrastructure.jpa.concert.repository.ConcertJpaRepository;
+import com.hanghae.concert_reservation.infrastructure.jpa.concert.repository.ConcertScheduleJpaRepository;
+import com.hanghae.concert_reservation.infrastructure.jpa.concert.repository.ConcertSeatJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,16 +1,15 @@
 package com.hanghae.concert_reservation.application.concert.concurrent;
 
-import com.hanghae.concert_reservation.application.concert.interactor.ConcertSeatReservationInteractor;
 import com.hanghae.concert_reservation.config.DatabaseCleanUp;
 import com.hanghae.concert_reservation.domain.concert.dto.command.ConcertSeatReservationCommand;
 import com.hanghae.concert_reservation.domain.concert.entity.Concert;
 import com.hanghae.concert_reservation.domain.concert.entity.ConcertSchedule;
 import com.hanghae.concert_reservation.domain.concert.entity.ConcertSeat;
 import com.hanghae.concert_reservation.domain.concert.service.ConcertService;
-import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertJpaRepository;
-import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertScheduleJpaRepository;
-import com.hanghae.concert_reservation.infrastructure.concert.repository.ConcertSeatJpaRepository;
-import com.hanghae.concert_reservation.infrastructure.concert.repository.ReservationJpaRepository;
+import com.hanghae.concert_reservation.infrastructure.jpa.concert.repository.ConcertJpaRepository;
+import com.hanghae.concert_reservation.infrastructure.jpa.concert.repository.ConcertScheduleJpaRepository;
+import com.hanghae.concert_reservation.infrastructure.jpa.concert.repository.ConcertSeatJpaRepository;
+import com.hanghae.concert_reservation.infrastructure.jpa.concert.repository.ReservationJpaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

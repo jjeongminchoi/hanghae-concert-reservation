@@ -4,7 +4,7 @@ import com.hanghae.concert_reservation.domain.user.constant.UserPointTransaction
 import com.hanghae.concert_reservation.domain.user.dto.command.UserPointChargeCommand;
 import com.hanghae.concert_reservation.domain.user.entity.UserPoint;
 import com.hanghae.concert_reservation.domain.user.service.UserService;
-import com.hanghae.concert_reservation.infrastructure.user.repository.UserPointJpaRepository;
+import com.hanghae.concert_reservation.infrastructure.jpa.user.repository.UserPointJpaRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

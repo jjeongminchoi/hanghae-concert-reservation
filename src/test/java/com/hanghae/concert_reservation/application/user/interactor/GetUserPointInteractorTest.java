@@ -2,7 +2,7 @@ package com.hanghae.concert_reservation.application.user.interactor;
 
 import com.hanghae.concert_reservation.adapter.api.user.dto.response.UserPointResponse;
 import com.hanghae.concert_reservation.domain.user.entity.UserPoint;
-import com.hanghae.concert_reservation.infrastructure.user.repository.UserPointJpaRepository;
+import com.hanghae.concert_reservation.infrastructure.jpa.user.repository.UserPointJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
