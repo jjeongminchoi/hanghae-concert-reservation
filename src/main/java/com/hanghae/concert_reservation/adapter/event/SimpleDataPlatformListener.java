@@ -25,7 +25,6 @@ public class SimpleDataPlatformListener implements DataPlatformListener {
     public void saveOutbox(PaymentInfoEvent event) throws JsonProcessingException {
         Object payload = null;
         if ("PaymentExternalEvent".equals(event.eventType())) {
-            log.info(">>>> 여기타나?");
             payload = new PaymentInfoPayload(event.concertSeatId(), event.concertName(), event.amount());
         }
         outboxService.createOutbox(event.eventKey(), event.eventType(), payload);
