@@ -44,9 +44,7 @@ class CreateWaitingQueueInteractorTest {
     void should_ThrowException_When_already_exist_WaitingQueue() {
         // given
         String sessionId = Base64.getEncoder().encodeToString(UUID.randomUUID().toString().getBytes(StandardCharsets.UTF_8));
-        String uuid = UUID.randomUUID().toString();
-        redisTemplate.opsForZSet().score("waiting_queue", uuid);
-//        waitingQueueRepository.save(WaitingQueue.from(sessionId, uuid));
+        waitingQueueRepository.addToWaitingQueue(sessionId);
 
         // exception
         assertThatThrownBy(() -> createWaitingQueueInteractor.createWaitingQueue(sessionId))

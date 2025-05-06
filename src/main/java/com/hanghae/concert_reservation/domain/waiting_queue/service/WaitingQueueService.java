@@ -12,10 +12,11 @@ public class WaitingQueueService {
     private final WaitingQueueRepository waitingQueueRepository;
 
     public WaitingQueueCreateResponse createWaitingQueue(String sessionId) {
-        return new WaitingQueueCreateResponse(waitingQueueRepository.addToWaitingQueue(sessionId));
+        String queueToken = waitingQueueRepository.addToWaitingQueue(sessionId);
+        return new WaitingQueueCreateResponse(queueToken);
     }
 
-    public void existsActiveWaitingQueue(String waitingQueueUuid) {
-        waitingQueueRepository.existsActiveWaitingQueue(waitingQueueUuid);
+    public void existsActiveWaitingQueue(String queueToken) {
+        waitingQueueRepository.existsActiveWaitingQueue(queueToken);
     }
 }
