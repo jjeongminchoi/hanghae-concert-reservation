@@ -1,5 +1,6 @@
 package com.hanghae.concert_reservation.domain.concert.entity;
 
+import com.hanghae.concert_reservation.common.exception.BizInvalidException;
 import com.hanghae.concert_reservation.domain.concert.constant.ReservationStatus;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -66,5 +67,15 @@ public class Reservation {
     public void changeReservationStatus(ReservationStatus reservationStatus) {
         this.reservationStatus = reservationStatus;
         this.updatedAt = LocalDateTime.now();
+    }
+
+    public void validatePayable() {
+        if (this.reservationStatus != ReservationStatus.RESERVED) {
+            throw new BizInvalidException("예약이 결제 가능한 상태가 아닙니다.");
+        }
+
+        if (this.tempReservedAt == null || this.tempReservedAt.isBefore(LocalDateTime.now())) {
+            throw new BizInvalidException("임시 예약 시간이 만료되었습니다.");
+        }
     }
 }

@@ -16,5 +16,5 @@ public interface ConcertRepository {
     ReservationInfoDto getReservationInfo(Long concertSeatId);
     List<Reservation> getExpiredTempReservations();
     Reservation save(Reservation reservation);
-    Reservation existReservedReservation(Long reservationId);
+    Reservation existReservation(Long reservationId);
 }

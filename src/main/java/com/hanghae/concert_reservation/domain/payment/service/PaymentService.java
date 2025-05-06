@@ -36,7 +36,8 @@ public class PaymentService {
     @Transactional
     public PaymentResponse payment(PaymentCommand command) {
         // 예약 확인
-        Reservation reservation = concertRepository.existReservedReservation(command.reservationId());
+        Reservation reservation = concertRepository.existReservation(command.reservationId());
+        reservation.validatePayable();
 
         // 포인트 사용
         UserPoint userPoint = userRepository.getPointByUserId(command.userId());

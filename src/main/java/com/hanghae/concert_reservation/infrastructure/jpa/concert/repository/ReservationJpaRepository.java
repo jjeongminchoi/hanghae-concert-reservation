@@ -23,6 +23,6 @@ public interface ReservationJpaRepository extends JpaRepository<Reservation, Lon
     @Query("SELECT r FROM Reservation r WHERE r.reservationStatus = 'RESERVED' AND r.tempReservedAt < CURRENT_TIMESTAMP")
     List<Reservation> getExpiredTempReservations();
 
-    @Query("SELECT r FROM Reservation r WHERE r.reservationStatus = 'RESERVED' AND r.tempReservedAt > CURRENT_TIMESTAMP")
-    Optional<Reservation> existReservedReservation(@Param("reservationId") Long reservationId);
+    @Query("SELECT r FROM Reservation r WHERE r.id = :reservationId")
+    Optional<Reservation> existReservation(@Param("reservationId") Long reservationId);
 }

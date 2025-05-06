@@ -62,8 +62,8 @@ public class ConcertRepositoryImpl implements ConcertRepository {
     }
 
     @Override
-    public Reservation existReservedReservation(Long reservationId) {
-        return reservationJpaRepository.existReservedReservation(reservationId)
+    public Reservation existReservation(Long reservationId) {
+        return reservationJpaRepository.existReservation(reservationId)
                 .orElseThrow(() -> new BizNotFoundException("예약을 찾을 수 없습니다."));
     }
 }
